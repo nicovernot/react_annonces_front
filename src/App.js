@@ -1,18 +1,17 @@
 import React,{Component} from 'react';
 import Login from './models/login'
-import {Card} from 'primereact/card';
 import Menu from './models/menu'
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { Button } from 'primereact/button';
 import axios from 'axios';
+import Register from './models/register'
 import {Dialog} from 'primereact/dialog';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useParams
 } from "react-router-dom";
 
@@ -20,15 +19,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     user:{role:"",email:"",password:"",logged:false,loggin:this.selogger,logouts:this.logout,openlogin:false,register:this.register},
-     modalvisible:false
-
+     user:{role:"",email:"",password:"",logged:false,loggin:this.selogger,logouts:this.logout,register:this.register},
+     modalvisible:false,
+     register:false
       }
   }
   
   selogger = event => {
   console.log("se logger ")
-  this.setState({user:{openlogin:true}})
   this.setState({modalvisible: true})
 
   }
@@ -40,7 +38,7 @@ class App extends Component {
   }
   register = event => {
     console.log("register")
-  
+    this.setState({register:true})
   }
 
 
@@ -48,7 +46,6 @@ class App extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-  this.setState({user:{openlogin:false}})
   this.setState({modalvisible: false})
   
    
@@ -56,7 +53,7 @@ class App extends Component {
     const  password= "najvnajv"
    
 
-    axios.post(`http://localhost:8002/api/login_check`, { username,password })
+    axios.post(`http://40.114.148.140/api/login_check`, { username,password })
       .then(res => {
         console.log(res);
         console.log(res.data.token);
@@ -78,17 +75,20 @@ class App extends Component {
           {!this.state.user.logged? (<div><Button label="login" icon="pi pi-check" onClick={this.selogger} iconPos="right" /> <Button label="Register" icon="pi pi-user" className="p-button-success" onClick={this.register} iconPos="right" /></div>):<Button label="logout" icon="pi pi-user" onClick={this.logout} iconPos="right" />}
         </Menu>  
         <Dialog header="login" visible={this.state.modalvisible} style={{width: '50vw'}} modal={true} onHide={() => this.setState({modalvisible: false})}>
-       {this.state.user.openlogin? (<div><Login><button onClick={this.handleSubmit}>onClick </button></Login></div>):"" }
+       <div><Login><button onClick={this.handleSubmit}>onClick </button></Login></div>
+       </Dialog>
+       <Dialog header="register" visible={this.state.register} style={{width: '50vw'}} modal={true} onHide={() => this.setState({register: false})}>
+       <div><Register><button onClick={this.register}>onClick </button></Register></div>
        </Dialog>
         <Switch>
           <Route path="/:id" children={<Child />} />
         </Switch>  
          </Router>
       
-        <Card title="Title" subTitle="SubTitle">
+      
          
           
-        </Card>
+
       </div>
     );
   }

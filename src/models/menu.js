@@ -3,9 +3,6 @@ import {Menubar} from 'primereact/menubar';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
-import { Button } from 'primereact/button';
-
-
 
 
 const items = [
