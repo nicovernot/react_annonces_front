@@ -13,9 +13,11 @@ const items = [
          {
             label:'New',
             icon:'pi pi-fw pi-plus',
+            url:"/",
             items:[
                {
                   label:'Bookmark',
+                  url: 'topics',
                   icon:'pi pi-fw pi-bookmark'
                },
                {

@@ -12,6 +12,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Link,
+  useLocation,
   useParams
 } from "react-router-dom";
 
@@ -77,7 +79,7 @@ class App extends Component {
         <Dialog header="login" visible={this.state.modalvisible} style={{width: '50vw'}} modal={true} onHide={() => this.setState({modalvisible: false})}>
        <div><Login><button onClick={this.handleSubmit}>onClick </button></Login></div>
        </Dialog>
-       <Dialog header="register" visible={this.state.register} style={{width: '50vw'}} modal={true} onHide={() => this.setState({register: false})}>
+       <Dialog header="register" className="rounded" visible={this.state.register} style={{width: '50vw'}} modal={true} onHide={() => this.setState({register: false})}>
        <div><Register><button onClick={this.register}>onClick </button></Register></div>
        </Dialog>
         <Switch>
@@ -100,7 +102,83 @@ function Child() {
 
   return (
     <div>
-      <h3>ID: {id}</h3>
+    <div class="p-grid ">
+    <div class="p-col-4">
+      <Router>
+        <QueryParams path={id} />
+      </Router>
+    </div>
+
+    <div class="p-col-8"><h3>ID: {id}</h3>
+    </div>
+    
+</div>
+      
+    
+    </div>
+  );
+}
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
+function QueryParams(props) {
+  let query = useQuery();
+  let path = props.path
+  return (
+    <div>
+      <div>
+        <h2>Accounts</h2>
+        <ul>
+  
+        <li>
+            <Link 
+             to={{
+              pathname: path? path :"",
+              search: "?name=zillow-group",
+                           
+            }}
+            
+           > link </Link>
+          </li>
+          <li>
+            <Link 
+             to={{
+              pathname: path? path :"",
+              search: "?name=yahoo",
+                           
+            }}
+            
+           > yahoo</Link>
+          </li>
+          <li>
+            <Link to="/{path}?name=zillow-group">Zillow Group</Link>
+          </li>
+          <li>
+            <Link to="/{path}?name=yahoo">Yahoo</Link>
+          </li>
+          <li>
+            <Link to="/account?name=modus-create">Modus Create</Link>
+          </li>
+        </ul>
+
+        <Childname name={query.get("name")} />
+      </div>
+    </div>
+  );
+}
+
+function Childname({ name }) {
+  return (
+    <div>
+      {name ? (
+        <h3>
+          The <code>name</code> in the query string is &quot;{name}
+          &quot;
+        </h3>
+      ) : (
+        <h3>There is no name in the query string</h3>
+      )}
     </div>
   );
 }
