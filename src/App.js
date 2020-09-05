@@ -11,7 +11,7 @@ import loginin from './services/loginservice';
 import Ssm from './models/ssm'
 import Map from './models/maps'
 import { css } from 'emotion'
-import Espace_entreprise from './models/espaceentreprise'
+import Espace_Entreprise from './models/espaceentreprise'
 import axios from 'axios';
 import EspaceHote from './models/espacehote'
 import {
@@ -20,7 +20,7 @@ import {
   Route,
   useLocation,
   useParams,
-  Link
+
 } from "react-router-dom";
 
 class App extends Component {
@@ -98,7 +98,7 @@ window.location.href = "http://www.w3schools.com";
     if(pwd && email){
       console.log(email.email)
       console.log(process.env.REACT_APP_URL_HOST)
-      const response = axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
+      axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
      
         console.log(res.data.jwt);
@@ -205,7 +205,7 @@ function renderSwitchmenu(id) {
 
     case 'espaceentreprise':
      
-      return <Espace_entreprise urlpath={id}  />;
+      return <Espace_Entreprise urlpath={id}  />;
     case 'espacehote':
      
         return <EspaceHote urlpath={id}  />;  
