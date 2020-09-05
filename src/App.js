@@ -10,22 +10,37 @@ import {Dialog} from 'primereact/dialog';
 import loginin from './services/loginservice';
 import Ssm from './models/ssm'
 import Map from './models/maps'
+import { css } from 'emotion'
+import Espace_entreprise from './models/espaceentreprise'
+import axios from 'axios';
+import EspaceHote from './models/espacehote'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   useLocation,
-  useParams
+  useParams,
+  Link
 } from "react-router-dom";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-     user:{role:"",email:"",password:"",logged:false,loggin:this.handleSubmit,logouts:this.logout,register:this.register},
+     user:{
+          role:"",
+          email:"",
+          password:"",
+          logginerror:false,
+          logged:localStorage.getItem("token") ? true:false,
+          loggin:this.handleSubmit,
+          logouts:this.logout,
+          register:this.register
+        },
      modalvisible:false,
      register:false,
      datamenu:[]
+     
       }
   }
   
@@ -53,47 +68,95 @@ window.location.href = "http://www.w3schools.com";
     this.setState({register:true})
   }
 
+
   componentDidMount() {
-    fetch(`http://`+process.env.REACT_APP_URL_HOST+`/site`)
+
+    fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus`)
       .then(res => res.json())
       .then(json => {
-
+          console.log(json)
         this.setState({ datamenu: json })
       }
         );
   }
 
+  handleRegister = (event,pwd,email) => {
+    event.preventDefault();
+  
+    loginin(pwd.pwd,email.email).then(() => 
+    this.setState({user : {email: localStorage.getItem("username"),  logged :true }}),
+    this.setState({modalvisible: false}),console.log("in logginapp")
+    );
+    
+   
+  
+  }
 
   handleSubmit = (event,pwd,email) => {
-    console.log(pwd.pwd + ' '+ email.email)
+        
     event.preventDefault();
-    this.setState({modalvisible: false})
-     loginin(pwd.pwd,email.email).then(() => 
-    this.setState({user : {email: localStorage.getItem("username"),  logged :true }}));
+    if(pwd && email){
+      console.log(email.email)
+      console.log(process.env.REACT_APP_URL_HOST)
+      const response = axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
+      .then(res => {
+     
+        console.log(res.data.jwt);
+        if(res.data.jwt){
+          localStorage.setItem("username", email.email); 
+          localStorage.setItem("token", res.data.jwt); 
+          this.setState({modalvisible: false})
+          this.setState({user : {email: localStorage.getItem("username"),  logged :true }})
+         
+        } 
+      }).catch((error) => {
+        console.log(error)
+        this.setState({user:{logginerror:true}})
+       
+    })
+
+  }
+      
+      
+    
+   
   }
 
   render() { 
    
     return (  
-      <div className="alert-info">
+      <div >
          <Router>
            
           <Menu user={this.state.user} menuHandler={this.menuHandler} menu={this.state.datamenu}>
-              {!this.state.user.logged? (<div><Button label="login" icon="pi pi-check" onClick={this.selogger} iconPos="right" /> <Button label="Register" icon="pi pi-user" className="p-button-success" onClick={this.register} iconPos="right" /></div>):<Button label="logout" icon="pi pi-user" onClick={this.logout} iconPos="right" />}
+              {!this.state.user.logged? (
+              <div 
+               className={css`
+               float: right;
+               }
+             `}>
+               <Button label="Login" icon="pi pi-check" onClick={this.selogger} iconPos="right" /> 
+               <Button   icon="pi pi-user" label="S'inscrire" className="p-button-success" onClick={this.register} iconPos="right"/>
+               </div>):
+              <Button className={css`
+              float: right;
+              }
+            `} label="logout" icon="pi pi-user" onClick={this.logout} iconPos="right" />}
           </Menu>  
-          
+         
             <Dialog header="login" visible={this.state.modalvisible} style={{width: '50vw'}} modal={true} onHide={() => this.setState({modalvisible: false})}>
-          <div><Login loggin= {this.handleSubmit}/></div>
+          <div><Login usererr={this.state.user.logginerror} loggin= {this.handleSubmit}/></div>
           </Dialog>
 
           <Dialog header="register" className="rounded" visible={this.state.register}  style={{width: '50vw'}} modal={true} onHide={() => this.setState({register: false})}>
           <div><Register register= {this.register}/></div>
           </Dialog>
-
+           <div className="container">
           <Switch>
               <Route path="/:id" children={<Child />} />
           </Switch>  
-            
+           </div>
+
          </Router>
 
       </div>
@@ -139,6 +202,16 @@ function renderSwitchmenu(id) {
     case 'home':
      
     return <Home urlpath={id}  />;
+
+    case 'espaceentreprise':
+     
+      return <Espace_entreprise urlpath={id}  />;
+    case 'espacehote':
+     
+        return <EspaceHote urlpath={id}  />;  
+    case 'register':
+     
+      return <Register urlpath={id}  />;
     case 'about':
      
       return <About urlpath={id}/>;
@@ -173,6 +246,7 @@ function useQuery() {
 }
 //sousmenu - page 
 function QueryParams() {
+  
   let query = useQuery();
  const testf = () => {
     console.log("test")
@@ -188,7 +262,7 @@ function QueryParams() {
         <Childname name={query.get("name")} />
         </div> 
         )
-        :""
+        :"jj"
        }
       </div>
     </div>

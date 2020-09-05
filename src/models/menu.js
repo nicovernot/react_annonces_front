@@ -1,19 +1,32 @@
 import React from 'react';
-import {Menubar} from 'primereact/menubar';
-import 'primeicons/primeicons.css';
-import 'primereact/resources/themes/nova-light/theme.css';
-import 'primereact/resources/primereact.css';
+import { css } from 'emotion'
+import {
+   
+    Link
+  } from "react-router-dom";
 
 const Menu = (props) => {
+    
+    const menulist = props.menu.filter(men => men.visible == true).map((men,key)=>
+    <Link key={key} className={men.className}
+    to={men.url}>{men.label}</Link>
+    ) 
   
     return (
-        <div>
-        <Menubar className="bg-info" onClick={(e)=> props.menuHandler}  model={props.menu}>
+        <ul  className={css`
+       
+        background-color: lawngreen;
+        font-size: 24px;
+        border-radius: 4px;
+        
+      `}>
+       {menulist}
         {props.children}
-        </Menubar>   
+       
+         
 
        
-        </div>
+        </ul>
     );
 };
 
