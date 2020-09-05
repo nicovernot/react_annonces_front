@@ -11,7 +11,7 @@ import loginin from './services/loginservice';
 import Ssm from './models/ssm'
 import Map from './models/maps'
 import { css } from 'emotion'
-import Espace_Entreprise from './models/espaceentreprise'
+import EspaceEntreprise from './models/espaceentreprise'
 import axios from 'axios';
 import EspaceHote from './models/espacehote'
 import {
@@ -205,7 +205,7 @@ function renderSwitchmenu(id) {
 
     case 'espaceentreprise':
      
-      return <Espace_Entreprise urlpath={id}  />;
+      return <EspaceEntreprise urlpath={id}  />;
     case 'espacehote':
      
         return <EspaceHote urlpath={id}  />;  
