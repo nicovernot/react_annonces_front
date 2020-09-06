@@ -11,6 +11,7 @@ import loginin from './services/loginservice';
 import Ssm from './models/ssm'
 import Map from './models/maps'
 import { css } from 'emotion'
+import Home from './models/home'
 import EspaceEntreprise from './models/espaceentreprise'
 import axios from 'axios';
 import EspaceHote from './models/espacehote'
@@ -61,9 +62,30 @@ window.location.href = "http://www.w3schools.com";
     localStorage.removeItem("token"); 
     localStorage.removeItem("username"); 
   }
-  register = (event,pwd,email) => {
+  register = (event,pwd,email,username) => {
     console.log(pwd + ' '+ email)
     event.preventDefault();
+    axios
+  .post('http://localhost:1337/auth/local/register', {
+    username: username,
+    email: email,
+    password: pwd,
+  })
+  .then(response => {
+    // Handle success.
+    this.setState({register:false})
+    console.log('Well done!');
+    localStorage.setItem("username", email); 
+    localStorage.setItem("token", response.data.jwt); 
+    this.setState({modalvisible: false})
+    this.setState({user : {email: email,  logged :true }})
+    console.log('User profile', response.data.user);
+    console.log('User token', response.data.jwt);
+  })
+  .catch(error => {
+    // Handle error.
+    console.log('An error occurred:', error.response);
+  });
     console.log("register")
     this.setState({register:true})
   }
@@ -80,17 +102,7 @@ window.location.href = "http://www.w3schools.com";
         );
   }
 
-  handleRegister = (event,pwd,email) => {
-    event.preventDefault();
-  
-    loginin(pwd.pwd,email.email).then(() => 
-    this.setState({user : {email: localStorage.getItem("username"),  logged :true }}),
-    this.setState({modalvisible: false}),console.log("in logginapp")
-    );
-    
-   
-  
-  }
+
 
   handleSubmit = (event,pwd,email) => {
         
@@ -101,13 +113,13 @@ window.location.href = "http://www.w3schools.com";
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
      
-        console.log(res.data.jwt);
         if(res.data.jwt){
+          console.log(res.data.jwt);
           localStorage.setItem("username", email.email); 
           localStorage.setItem("token", res.data.jwt); 
           this.setState({modalvisible: false})
-          this.setState({user : {email: localStorage.getItem("username"),  logged :true }})
-         
+          this.setState({user : {email: email.email,  logged :true }})
+          this.setState({user:{logginerror:false}})
         } 
       }).catch((error) => {
         console.log(error)
@@ -136,7 +148,7 @@ window.location.href = "http://www.w3schools.com";
                }
              `}>
                <Button label="Login" icon="pi pi-check" onClick={this.selogger} iconPos="right" /> 
-               <Button   icon="pi pi-user" label="S'inscrire" className="p-button-success" onClick={this.register} iconPos="right"/>
+               <Button   icon="pi pi-user" label="S'inscrire" className="p-button-success ml-1" onClick={this.register} iconPos="right"/>
                </div>):
               <Button className={css`
               float: right;
@@ -212,9 +224,7 @@ function renderSwitchmenu(id) {
     case 'register':
      
       return <Register urlpath={id}  />;
-    case 'about':
-     
-      return <About urlpath={id}/>;
+
     default:
   console.log(`Sorry, we are out of ${id}.`);
   }
@@ -230,10 +240,8 @@ function renderSwitchcontent(id) {
 
     case 'home':
      
-    return <Home1 urlparam={id}  />;
-    case 'about':
-     
-      return <About1 urlparam={id}/>;
+    return <Home urlparam={id}  />;
+
     default:
   console.log(`Sorry, we are out of ${id}.`);
   }
@@ -284,58 +292,9 @@ function Childname({ name }) {
   }
 
   
-  
-  function Home(props) {
-   const id= props.urlpath
-   
-    return (
-      <div>
-        <h2>Home</h2>
-
-        <h3>ID: {id}</h3>
-     
-      </div>
-    );
-  }
-  
-  function About(props) {
-  const params =props.urlpath
-  
-    return (
-      <div>
-        <h2>About ---{params}</h2>
-      </div>
-    );
-    
-
-   }
-
-   //content
-
-   function Home1(props) {
-    const id= props.urlparam
-    
-     return (
-       <div>
-         <h2>Home</h2>
  
-         <h3>ID: {id}</h3>
-      
-       </div>
-     );
-   }
-   
-   function About1(props) {
-   const params =props.urlparam
-  
-     return (
-       <div>
-         <h2>About ---{params}</h2>
-       </div>
-     );
-     
- 
-    }
+
+
 
       
 

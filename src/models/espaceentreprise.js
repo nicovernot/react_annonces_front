@@ -3,7 +3,12 @@ const Espace_entreprise = (props) => {
     return ( 
         <div>
 
-            Espace entreprise
+<div className="jumbotron jumbotron-fluid">
+  <div className="container">
+    <h1>      Espace Entreprise</h1>
+    <p>ici on aura l'espace entreprise</p>
+  </div>
+</div>
         </div>
      );
 }
