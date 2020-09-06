@@ -111,14 +111,16 @@ window.location.href = "http://www.w3schools.com";
       console.log(process.env.REACT_APP_URL_HOST)
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
-     
+     console.log(res)
         if(res.data.jwt){
           console.log(res.data.jwt);
+
           localStorage.setItem("username", email.email); 
           localStorage.setItem("token", res.data.jwt); 
           this.setState({modalvisible: false})
           this.setState({user : {email: email.email,  logged :true }})
           this.setState({user:{logginerror:false}})
+          document.location.reload(true);
         } 
       }).catch((error) => {
         console.log(error)
