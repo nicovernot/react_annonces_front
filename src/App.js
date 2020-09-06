@@ -7,7 +7,6 @@ import 'primeicons/primeicons.css';
 import { Button } from 'primereact/button';
 import Register from './models/register'
 import {Dialog} from 'primereact/dialog';
-import loginin from './services/loginservice';
 import Ssm from './models/ssm'
 import Map from './models/maps'
 import { css } from 'emotion'
