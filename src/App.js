@@ -95,7 +95,7 @@ window.location.href = "http://www.w3schools.com";
     fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus`)
       .then(res => res.json())
       .then(json => {
-          console.log(json)
+     
         this.setState({ datamenu: json })
       }
         );

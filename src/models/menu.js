@@ -22,6 +22,7 @@ const Menu = (props) => {
   
   <div className="collapse navbar-collapse" id="collapsibleNavbar">
     <ul className="navbar-nav">
+      
      {menulist}
     </ul>
   </div>
