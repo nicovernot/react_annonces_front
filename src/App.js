@@ -92,7 +92,7 @@ window.location.href = "http://www.w3schools.com";
 
   componentDidMount() {
 
-    fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus`)
+    fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus?_sort=ordre:ASC`)
       .then(res => res.json())
       .then(json => {
      
