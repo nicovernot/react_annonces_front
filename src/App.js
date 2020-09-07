@@ -9,6 +9,7 @@ import Register from './models/register'
 import {Dialog} from 'primereact/dialog';
 import Ssm from './models/ssm'
 import Map from './models/maps'
+import MonCompte from './models/moncompte'
 import { css } from 'emotion'
 import Home from './models/home'
 import EspaceEntreprise from './models/espaceentreprise'
@@ -163,6 +164,7 @@ window.location.href = "http://www.w3schools.com";
           <div><Register register= {this.register}/></div>
           </Dialog>
            <div className="container">
+             <br/>
           <Switch>
               <Route path="/:id" children={<Child />} />
           </Switch>  
@@ -213,6 +215,10 @@ function renderSwitchmenu(id) {
     case 'home':
      
     return <Home urlpath={id}  />;
+
+    case 'moncompte':
+     
+    return <MonCompte urlpath={id}  />;
 
     case 'espaceentreprise':
      
