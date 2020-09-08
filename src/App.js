@@ -16,6 +16,7 @@ import Home from './models/home'
 import EspaceEntreprise from './models/espaceentreprise'
 import axios from 'axios';
 import EspaceHote from './models/espacehote'
+import Alert from './models/alert'
 import {
   BrowserRouter as Router,
   Switch,
@@ -34,6 +35,8 @@ class App extends Component {
           email:localStorage.getItem("username") ? localStorage.getItem("username"):"",
           password:"",
           logginerror:false,
+          adresses:localStorage.getItem("adresses") ? localStorage.getItem("adresses"):[],
+          annonces:[],
           logged:localStorage.getItem("token") ? true:false,
           loggin:this.handleSubmit,
           logouts:this.logout,
@@ -58,6 +61,7 @@ class App extends Component {
     this.setState({user : { logged : false }}) 
     localStorage.removeItem("token"); 
     localStorage.removeItem("username"); 
+    localStorage.removeItem("adresses"); 
     window.location.href = "/";
   }
 
@@ -112,12 +116,12 @@ class App extends Component {
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
           if(res.data.jwt){
-          
+          console.log(res.data.user.adresses)
           this.setState({user:{logginerror:false}})
-   
+          localStorage.setItem("adresses", JSON.stringify(res.data.user.adresses));  
           localStorage.setItem("username", email.email); 
           localStorage.setItem("token", res.data.jwt); 
-          this.setState({user : {email: res.data.user.email,  logged :true }})
+          this.setState({user : {email: res.data.user.email,adresses: res.data.user.adresses,  logged :true }})
           this.setState({modalvisible: false})
          
         } 
@@ -160,6 +164,8 @@ class App extends Component {
           </Dialog>
            <div className="container">
              <br/>
+             
+           {this.state.user.logged && this.state.user.adresses.length === 0 ?   <Alert/>:""}
           <Switch>
               <Route path="/:id"  children={<Child user={this.state.user.email} />} />
               <Route path="/"  children={<Home user={this.state.user.email} />} />

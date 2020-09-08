@@ -4,7 +4,7 @@ Redirect
  } from "react-router-dom";
 
 const MonComte = (props) => {
-  console.log(props.user)
+
     return (
       <div>
 

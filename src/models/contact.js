@@ -37,7 +37,7 @@ const Contact = () => {
         <Form>
         <Form.Group controlId="formBasicName">
           <Form.Label>Nom</Form.Label>
-          <Form.Control type="text" placeholder="Nom" onChange={(e) => setNom({nom: e.target.value})} required="true"/>
+          <Form.Control type="text" placeholder="Nom" onChange={(e) => setNom({nom: e.target.value})}/>
         </Form.Group>
         <Form.Group controlId="formBasicObjet">
         <Form.Label>objet</Form.Label>
