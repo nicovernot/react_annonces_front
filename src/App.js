@@ -6,6 +6,7 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import { Button } from 'primereact/button';
 import Register from './models/register'
+import Contact from './models/contact'
 import {Dialog} from 'primereact/dialog';
 import Ssm from './models/ssm'
 import Map from './models/maps'
@@ -153,7 +154,7 @@ window.location.href = "http://www.w3schools.com";
               <Button className={css`
               float: right;
               }
-            `} label="logout" icon="pi pi-user" onClick={this.logout} iconPos="right" />}
+            `} label="Deconnexion" icon="pi pi-user" onClick={this.logout} iconPos="right" />}
           </Menu>  
          
             <Dialog header="login" visible={this.state.modalvisible} style={{width: '50vw'}} modal={true} onHide={() => this.setState({modalvisible: false})}>
@@ -223,6 +224,9 @@ function renderSwitchmenu(id) {
     case 'espaceentreprise':
      
       return <EspaceEntreprise urlpath={id}  />;
+    case 'contact':
+     
+        return <Contact urlpath={id}  />;  
     case 'espacehote':
      
         return <EspaceHote urlpath={id}  />;  
@@ -275,7 +279,7 @@ function QueryParams() {
         <Childname name={query.get("name")} />
         </div> 
         )
-        :"jj"
+        :""
        }
       </div>
     </div>

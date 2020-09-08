@@ -37,7 +37,7 @@ export function Register(props) {
   <label >refaire Mdp</label>
   <Password onChange={(e) => setPwd1({pwd1: e.target.value})} required/>
   </div>
-    <Button onClick={(e) =>{validation(e) }}  label="Save" />
+    <Button onClick={(e) =>{validation(e) }}  label="Valider" />
 </div>
 
   );

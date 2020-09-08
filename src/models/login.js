@@ -27,7 +27,7 @@ export function Login(props) {
     </div>
     {err? <p css={css` backgroundColor: red`}>formulaire mal rempli</p>:""}
     {props.usererr? <p css={css` backgroundColor: red`}>error authentification</p>:""}
-      <Button onClick={(e)=> pwd && email ? props.loggin(e,pwd,email): setErr({err:true})}  label="Save" />
+      <Button onClick={(e)=> pwd && email ? props.loggin(e,pwd,email): setErr({err:true})}  label="Valider" />
 </div>
 
   );
