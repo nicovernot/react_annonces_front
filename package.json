@@ -10,7 +10,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "axios": "^0.19.2",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.5.2",
     "classnames": "^2.2.6",
     "dotenv": "^8.2.0",
     "emotion": "^10.0.27",
@@ -27,7 +27,7 @@
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.7.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.3",
     "react-transition-group": "^4.4.1",
     "react-validation": "^3.0.7"
   },
