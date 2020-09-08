@@ -13,9 +13,9 @@ const Contact = () => {
     const validation= (event) => {
     if(nom && email && objet && message ){
     setValide({valide:true})
-    console.log(email)
+    if(valide) console.log(email)
       axios({
-        url: 'http://localhost:1337/graphql',
+        url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
         method: 'post',
         data: {
           query: `
