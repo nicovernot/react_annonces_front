@@ -143,17 +143,12 @@ class App extends Component {
           <Menu user={this.state.user} menuHandler={this.menuHandler} menu={this.state.datamenu}>
               {!this.state.user.logged? (
               <div 
-               className={css`
-               float: right;
-               }
-             `}>
+               className="text-left"
+             >
                <Button label="Login" icon="pi pi-check" onClick={this.selogger} iconPos="right" /> 
                <Button   icon="pi pi-user" label="S'inscrire" className="p-button-success ml-1" onClick={this.register} iconPos="right"/>
                </div>):
-              <Button className={css`
-              float: right;
-              }
-            `} label="Deconnexion" icon="pi pi-user" onClick={this.logout} iconPos="right" />}
+              <div className="text-left"><Button  label="Deconnexion" icon="pi pi-user" onClick={this.logout} iconPos="right" /></div>}
           </Menu>  
          
             <Dialog header="login" visible={this.state.modalvisible} style={{width: '50vw'}} modal={true} onHide={() => this.setState({modalvisible: false})}>
