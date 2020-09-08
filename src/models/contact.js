@@ -21,7 +21,7 @@ const Contact = () => {
           query: `
           mutation{
             createContactmessage
-            (input:{data:{nom:"${nom}",objet:"${objet}",mail:"${email.email}",message:"${message}"}})
+            (input:{data:{nom:"${nom.nom}",objet:"${objet.objet}",mail:"${email.email}",message:"${message.message}"}})
           {contactmessage{id}}
           }
             `
