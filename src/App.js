@@ -31,7 +31,7 @@ class App extends Component {
     this.state = {
      user:{
           role:"",
-          email:"",
+          email:localStorage.getItem("username") ? localStorage.getItem("username"):"",
           password:"",
           logginerror:false,
           logged:localStorage.getItem("token") ? true:false,
@@ -46,10 +46,6 @@ class App extends Component {
       }
   }
   
-  menuHandler = (event) => {
-console.log("menu click")
-window.location.href = "http://www.w3schools.com";
-  }
 
   selogger = event => {
   console.log("se logger ")
@@ -62,7 +58,9 @@ window.location.href = "http://www.w3schools.com";
     this.setState({user : { logged : false }}) 
     localStorage.removeItem("token"); 
     localStorage.removeItem("username"); 
+    window.location.href = "/";
   }
+
   register = (event,pwd,email,username) => {
     console.log(pwd + ' '+ email)
     event.preventDefault();
@@ -74,6 +72,7 @@ window.location.href = "http://www.w3schools.com";
   })
   .then(response => {
     // Handle success.
+   
     this.setState({register:false})
     console.log('Well done!');
     localStorage.setItem("username", email); 
@@ -109,16 +108,16 @@ window.location.href = "http://www.w3schools.com";
         
     event.preventDefault();
     if(pwd && email){
-      console.log(email.email)
-      console.log(process.env.REACT_APP_URL_HOST)
+
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
           if(res.data.jwt){
+          
           this.setState({user:{logginerror:false}})
-          console.log(this.state.user.logged);
+   
           localStorage.setItem("username", email.email); 
           localStorage.setItem("token", res.data.jwt); 
-          this.setState({user : {email: email.email,  logged :true }})
+          this.setState({user : {email: res.data.user.email,  logged :true }})
           this.setState({modalvisible: false})
          
         } 
@@ -167,7 +166,7 @@ window.location.href = "http://www.w3schools.com";
            <div className="container">
              <br/>
           <Switch>
-              <Route path="/:id" children={<Child />} />
+              <Route path="/:id"  children={<Child user={this.state.user.email} />} />
           </Switch>  
            </div>
 
@@ -178,17 +177,17 @@ window.location.href = "http://www.w3schools.com";
   }
 }
 
-function Child() {
+function Child(props) {
   // We can use the `useParams` hook here to access
   // the dynamic pieces of the URL.
   let { id } = useParams();
-
+console.log(props)
   return (
   <div>
       <div className="content center ">
 
       <div  >
-      {renderSwitchmenu(id)}
+      {renderSwitchmenu(id,props.user)}
       </div>
 
       <div >
@@ -206,7 +205,7 @@ function Child() {
   );
 }
 
-function renderSwitchmenu(id) {
+function renderSwitchmenu(id,user) {
 
   switch(id) {
     case 'maps':
@@ -219,7 +218,7 @@ function renderSwitchmenu(id) {
 
     case 'moncompte':
      
-    return <MonCompte urlpath={id}  />;
+    return <MonCompte user={user} urlpath={id}  />;
 
     case 'espaceentreprise':
      

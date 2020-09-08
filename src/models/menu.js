@@ -8,7 +8,7 @@ import {
 
 const Menu = (props) => {
     const logged = props.user.logged
-    console.log(logged)
+
     const menulist = props.menu.filter(men => men.visible === true).map((men,key)=>
     <li key={key} className="nav-item">
       {logged && !men.public ? 
@@ -32,7 +32,7 @@ const Menu = (props) => {
   
     return (
 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
-  <Navbar.Brand href="#home">Redma</Navbar.Brand>
+  <Navbar.Brand href="/">Redma</Navbar.Brand>
   <Navbar.Collapse  id="responsive-navbar-nav">
     <Nav className="mr-auto">
      {menulist}

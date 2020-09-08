@@ -1,17 +1,33 @@
 import React from 'react';
+import {
+Redirect
+ } from "react-router-dom";
 
+const MonComte = (props) => {
+  console.log(props.user)
+    return (
+      <div>
 
-const MonComte = () => {
-    return ( 
+      {props.user? 
         <div>
         <div className="jumbotron jumbotron-fluid">
           <div className="container">
-            <h1>      Mon Compte</h1>
+      <h1>      Mon Compte{props.user}</h1>
             <p>ici on aura l'espace Mon Compte</p>
           </div>
         </div>
               
                 </div>
+        :
+        <Redirect
+        to={{
+          pathname: "/",
+          state: { from: "moncompte" }
+        }}
+        />
+      }
+      </div> 
+       
      );
 }
  
