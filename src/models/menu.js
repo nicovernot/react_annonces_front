@@ -32,7 +32,7 @@ const Menu = (props) => {
   
     return (
 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
-  <Navbar.Brand href="/">Redma</Navbar.Brand>
+  <Link className="navbar-brand" to="/">Redma</Link>
   <Navbar.Collapse  id="responsive-navbar-nav">
     <Nav className="mr-auto">
      {menulist}

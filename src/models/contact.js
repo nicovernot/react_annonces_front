@@ -46,7 +46,7 @@ const Contact = () => {
         <Form.Group controlId="formBasicMessage">
         <Form.Label>Message </Form.Label>
         <br/>
-        <InputTextarea rows={5} cols={30}  onChange={(e) => setMessage({message: e.target.value}) }/>
+        <InputTextarea rows={5} cols={80}  onChange={(e) => setMessage({message: e.target.value}) }/>
         </Form.Group>
         <Form.Group controlId="formBasicEmail">
         <Form.Label>Email address</Form.Label>

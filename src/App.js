@@ -167,6 +167,7 @@ class App extends Component {
              <br/>
           <Switch>
               <Route path="/:id"  children={<Child user={this.state.user.email} />} />
+              <Route path="/"  children={<Home user={this.state.user.email} />} />
           </Switch>  
            </div>
 
@@ -181,7 +182,7 @@ function Child(props) {
   // We can use the `useParams` hook here to access
   // the dynamic pieces of the URL.
   let { id } = useParams();
-console.log(props)
+
   return (
   <div>
       <div className="content center ">
