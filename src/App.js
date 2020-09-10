@@ -104,6 +104,7 @@ class App extends Component {
   
     this.setState({user : { logged : false }}) 
     localStorage.removeItem("token"); 
+    localStorage.removeItem("email");
     localStorage.removeItem("username"); 
     localStorage.removeItem("adresses"); 
     localStorage.removeItem("userid"); 
