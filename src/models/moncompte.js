@@ -16,8 +16,8 @@ const MonComte = (props) => {
 
           <div className="row">
 
-      <div className="col-sm-6 card">
-        <div className="card ml-1">
+      <div className="col-sm-6 ">
+        <div className="card">
       <h2 className="badge badge-secondary">      Mon Compte </h2>
       <ul className="list-group">
       <li className="list-group-item"><p className="badge badge-secondary">Usename:</p> {props.user.username}</li>
@@ -50,15 +50,13 @@ const MonComte = (props) => {
                   }
       </div>
   
-           
-                <div className="col-sm-12 card ">
+                
+                <div className="col-sm-12 card mt-1">
                   <div className="card ml-1">
                 <ListeLocations/>
                 </div>
                 </div>  
-                <div className="col-sm-12 card ">
-                fffff
-                </div>     
+  
       </div>
                 </div>
         :
