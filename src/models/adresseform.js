@@ -23,7 +23,7 @@ const AdresseForm = () => {
       
       const fetchData = async () => {
         const result = await axios({
-            url: 'http://localhost:1337/graphql',
+            url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
             method: 'post',
             data: {
               query: `
