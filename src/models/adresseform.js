@@ -19,7 +19,9 @@ const AdresseForm = () => {
          setErrRempli(true)
      }
     }
-    useEffect(async () => {
+    useEffect(() => {
+      
+      const fetchData = async () => {
         const result = await axios({
             url: 'http://localhost:1337/graphql',
             method: 'post',
@@ -33,6 +35,8 @@ const AdresseForm = () => {
           });
           const json = await result.data.data.departements
           setData(json);
+        }
+        fetchData()
         }, []);
      
 const dept = Array.from(data)
