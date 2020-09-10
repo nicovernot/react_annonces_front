@@ -220,7 +220,7 @@ console.log(this.state.user.adresses)
              <br/>
              
            {this.state.user.logged && this.state.user.adresses.length === 0  ?   <Alert/>:""}
-           <button onClick={(e)=> this.getData(e) }>click</button>
+           
           <Switch>
               <Route path="/:id"  children={<Child user={this.state.user} />} />
               <Route path="/"  children={<Home user={this.state.user} />} />
