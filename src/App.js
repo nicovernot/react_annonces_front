@@ -1,9 +1,12 @@
 import React,{Component} from 'react';
 import Login from './models/login'
+import ErrorPage from './models/erropage'
 import Menu from './models/menu'
+import loggiin from './services/loginservice'
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import AdresseFrom from './models/adresseform'
 import { Button } from 'primereact/button';
 import Register from './models/register'
 import Contact from './models/contact'
@@ -22,7 +25,6 @@ import {
   Route,
   useLocation,
   useParams,
-
 } from "react-router-dom";
 
 class App extends Component {
@@ -31,23 +33,66 @@ class App extends Component {
     this.state = {
      user:{
           role:"",
-          email:localStorage.getItem("username") ? localStorage.getItem("username"):"",
+          email:localStorage.getItem("email") ? localStorage.getItem("email"):"",
+          username:localStorage.getItem("username") ? localStorage.getItem("username"):"",
           password:"",
           logginerror:false,
-          adresses:localStorage.getItem("adresses") ? localStorage.getItem("adresses"):[],
+          adresses:localStorage.getItem("adresses") ? JSON.parse(localStorage.getItem("adresses")):[],
           annonces:[],
           logged:localStorage.getItem("token") ? true:false,
           loggin:this.handleSubmit,
           logouts:this.logout,
-          register:this.register
+          register:this.register,
+          addadresse: this.ajoutAdresse,
         },
      modalvisible:false,
      register:false,
+     modaladresse:false,
      datamenu:[]
      
       }
   }
+  getData = event => {
+    const data =  loggiin("najvnajv","toto@aol.com")
+    data.then(resp =>{
+      console.log(resp)
+    })
+    console.log(data)
+  }
   
+  ajoutAdresse = event => {
+    console.log("ajout adresse")
+    this.setState({modaladresse: true})
+  }
+  
+  ajoutLocation = event => {
+    console.log("ajout location")
+  }
+  ajoutAnnoce = event => {
+    console.log("ajout annonce")
+  }
+
+  effacerAdresse = event => {
+    console.log("effacer adresse")
+  }
+  
+  effacerLocation = event => {
+    console.log("effacer location")
+  }
+  effacerAnnoce = event => {
+    console.log("effacer annonce")
+  }
+
+  modifAdresse = event => {
+    console.log("modif adresse")
+  }
+  
+  modifLocation = event => {
+    console.log("modif location")
+  }
+  modifAnnoce = event => {
+    console.log("modif annonce")
+  }
 
   selogger = event => {
   console.log("se logger ")
@@ -68,7 +113,7 @@ class App extends Component {
     console.log(pwd + ' '+ email)
     event.preventDefault();
     axios
-  .post('http://localhost:1337/auth/local/register', {
+  .post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local/register`, {
     username: username,
     email: email,
     password: pwd,
@@ -78,12 +123,13 @@ class App extends Component {
    
     this.setState({register:false})
     console.log('Well done!');
-    localStorage.setItem("username", email); 
+    localStorage.setItem("username", response.data.user.username); 
+    localStorage.setItem("email", response.data.user.email); 
     localStorage.setItem("token", response.data.jwt); 
+    localStorage.setItem("adresses", response.data.adresses); 
+    this.setState({user : {email: email, adresses: response.data.user.adresses, logged :true }})
     this.setState({modalvisible: false})
-    this.setState({user : {email: email,  logged :true }})
-    console.log('User profile', response.data.user);
-    console.log('User token', response.data.jwt);
+
   })
   .catch(error => {
     // Handle error.
@@ -95,7 +141,7 @@ class App extends Component {
 
 
   componentDidMount() {
-
+console.log(this.state.user.adresses)
     fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus?_sort=ordre:ASC`)
       .then(res => res.json())
       .then(json => {
@@ -115,10 +161,11 @@ class App extends Component {
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
           if(res.data.jwt){
-          console.log(res.data.user.adresses)
+         
           this.setState({user:{logginerror:false}})
           localStorage.setItem("adresses", JSON.stringify(res.data.user.adresses));  
-          localStorage.setItem("username", email.email); 
+          localStorage.setItem("email", res.data.user.email); 
+          localStorage.setItem("username", res.data.user.username); 
           localStorage.setItem("token", res.data.jwt); 
           this.setState({user : {email: res.data.user.email,adresses: res.data.user.adresses,  logged :true }})
           this.setState({modalvisible: false})
@@ -161,13 +208,18 @@ class App extends Component {
           <Dialog header="register" className="rounded" visible={this.state.register}  style={{width: '50vw'}} modal={true} onHide={() => this.setState({register: false})}>
           <div><Register register= {this.register}/></div>
           </Dialog>
+
+          <Dialog header="Ajout Adresse" visible={this.state.modaladresse} style={{width: '60vw'}} modal={true} onHide={() => this.setState({modaladresse: false})}>
+          <div><AdresseFrom/></div>
+          </Dialog>
            <div className="container">
              <br/>
              
-           {this.state.user.logged && this.state.user.adresses.length === 0 ?   <Alert/>:""}
+           {this.state.user.logged && this.state.user.adresses.length === 0  ?   <Alert/>:""}
+           <button onClick={(e)=> this.getData(e) }>click</button>
           <Switch>
-              <Route path="/:id"  children={<Child user={this.state.user.email} />} />
-              <Route path="/"  children={<Home user={this.state.user.email} />} />
+              <Route path="/:id"  children={<Child user={this.state.user} />} />
+              <Route path="/"  children={<Home user={this.state.user} />} />
           </Switch>  
            </div>
 
@@ -207,7 +259,8 @@ function Child(props) {
 }
 
 function renderSwitchmenu(id,user) {
-
+  console.log(id)
+  
   switch(id) {
     case 'maps':
      
@@ -215,7 +268,7 @@ function renderSwitchmenu(id,user) {
 
     case 'home':
      
-    return <Home urlpath={id}  />;
+  return <Home urlpath={id}  />;
 
     case 'moncompte':
      
@@ -235,7 +288,7 @@ function renderSwitchmenu(id,user) {
       return <Register urlpath={id}  />;
 
     default:
-  console.log(`Sorry, we are out of ${id}.`);
+      return <ErrorPage/>
   }
 }
 
@@ -251,8 +304,12 @@ function renderSwitchcontent(id) {
      
     return <Home urlparam={id}  />;
 
+    case 'login':
+     
+      return <Login urlparam={id}  />;
+
     default:
-  console.log(`Sorry, we are out of ${id}.`);
+  return 
   }
 }
 
@@ -263,7 +320,7 @@ function useQuery() {
 }
 //sousmenu - page 
 function QueryParams() {
-  
+
   let query = useQuery();
  const testf = () => {
     console.log("test")

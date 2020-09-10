@@ -1,25 +1,10 @@
 import axios from 'axios';
 
 async function loginin(password,username) {
-
-
-
    
-
-  const response = await axios.post(`http://localhost:1337/auth/local`, { "identifier":username,"password":password })
-      .then(res => {
-         console.log(username)
-     
-        console.log(res.data.jwt);
-        if(res.data.jwt){
-          localStorage.setItem("username", username); 
-          localStorage.setItem("token", res.data.jwt); 
-          console.log("loggin app")
-          return  response ;
-        } 
-      }).catch((error) => {
-       return error.name
-    })
+  console.log("loggin app")
+ const resp = axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { 'identifier':username,'password':password })
+     return await resp;
 }
 
 export default loginin;
