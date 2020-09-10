@@ -13,7 +13,32 @@ const AdresseForm = () => {
     const [errrempli, setErrRempli] = useState(false);
     const valide = (event) =>{
      if(nomvoie && typevoie && departement && numvoie && nomville && codepostal){
-
+       
+      axios({
+        url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
+        method: 'post',
+        headers: {'Authorization': 'Bearer '+localStorage.getItem('token')},
+        data: {
+          query: `
+          mutation{createAdresse(
+            input:{data:
+            {nomvoie: "${nomvoie.nomvoie}",
+            numvoie:${numvoie.numvoie},
+            typevoie:${typevoie.typevoie},
+            ville:"${nomville.nomville}",
+            codepostal:"${codepostal.codepostal}",
+            departement:"${departement.departement}",  
+            user:"${localStorage.getItem("userid")}"}})
+          {adresse{id}}
+          }
+            `
+        }
+      }).then((result) => {
+        console.log(result.data)
+       
+       
+      });
+      
          console.log("click")
      }else{
          setErrRempli(true)
@@ -28,7 +53,7 @@ const AdresseForm = () => {
             data: {
               query: `
               query{
-                departements{nom code}
+                departements{nom code id}
               }
                 `
             }
@@ -63,7 +88,7 @@ const dept = Array.from(data)
   <Form.Control as="select" custom  onChange={(e) => setDepartement({departement: e.target.value})}>
       <option value=""></option>
       {dept.map((de,key)=>(
-          <option key={key} value={de.code}>{de.nom}</option>
+          <option key={key} value={de.id}>{de.nom}</option>
       ))}
     </Form.Control>
   </Form.Group>

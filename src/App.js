@@ -106,6 +106,7 @@ class App extends Component {
     localStorage.removeItem("token"); 
     localStorage.removeItem("username"); 
     localStorage.removeItem("adresses"); 
+    localStorage.removeItem("userid"); 
     window.location.href = "/";
   }
 
@@ -127,6 +128,7 @@ class App extends Component {
     localStorage.setItem("email", response.data.user.email); 
     localStorage.setItem("token", response.data.jwt); 
     localStorage.setItem("adresses", response.data.adresses); 
+    localStorage.setItem("userid", response.data.user._id);
     this.setState({user : {email: email, adresses: response.data.user.adresses, logged :true }})
     this.setState({modalvisible: false})
 
@@ -167,9 +169,10 @@ console.log(this.state.user.adresses)
           localStorage.setItem("email", res.data.user.email); 
           localStorage.setItem("username", res.data.user.username); 
           localStorage.setItem("token", res.data.jwt); 
+          localStorage.setItem("userid", res.data.user._id);
           this.setState({user : {email: res.data.user.email,adresses: res.data.user.adresses,  logged :true }})
           this.setState({modalvisible: false})
-         
+         console.log(res)
         } 
       }).catch((error) => {
         console.log(error)
