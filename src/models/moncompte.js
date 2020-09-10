@@ -15,16 +15,17 @@ const MonComte = (props) => {
 
           <div className="row">
 
-      <div className="col-sm-6">
+      <div className="col-sm-5 card ml-1">
       <h2 className="badge badge-secondary">      Mon Compte </h2>
       <ul className="list-group">
-      <li className="list-group-item">{props.user.email}</li>
+      <li className="list-group-item"><p className="badge badge-secondary">Email:</p> {props.user.email}</li>
+      <li className="list-group-item"><p className="badge badge-secondary">Usename:</p> {props.user.username}</li>
       </ul>
       </div>
-      <div className="col-sm-6">
+      <div className="col-sm-5 card  ml-1">
       {props.user.adresses.length >0? 
             <div>
-              <h3 className="badge badge-secondary">      Mes Adresses </h3><br/>
+              <h2 className="badge badge-secondary">      Mes Adresses </h2><br/>
               <ul className="list-group">
               {props.user.adresses.map((adr,key)=>(
               <li key={key} className="list-group-item">
