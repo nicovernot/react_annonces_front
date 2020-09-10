@@ -1,5 +1,4 @@
 import React from 'react';
-import Listelocations from './listelocations'
 import {
 Redirect
  } from "react-router-dom";
