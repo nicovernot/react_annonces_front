@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ListeLocations = () => {
+const ListeLocations = (props) => {
     return ( 
         <div>
                 <div className="jumbotron jumbotron-fluid">
@@ -9,7 +9,6 @@ const ListeLocations = () => {
                     <p>ici on aura la liste de locations</p>
                 </div>
                 </div>
-                    
         </div>
      );
 }

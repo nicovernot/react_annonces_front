@@ -7,6 +7,10 @@ import ListeLocations from './listelocations';
 
 const MonComte = (props) => {
 
+   const openform = (Event) =>{
+     console.log("test")
+   }
+
    
     return (
       <div>
@@ -41,11 +45,11 @@ const MonComte = (props) => {
                     </ul>
                     <br/>
 
-                    <Button label="Ajouter" icon="pi pi-plus" onClick={props.user.addadresse} className="p-button-success"/>
+                    <Button label="Ajouter" icon="pi pi-plus" onClick={(e)=>props.user.addadresse} className="p-button-success"/>
                   </div>
                   :
                   <div>
-                    <Button label="Ajouter" icon="pi pi-plus" onClick={props.user.addadresse} className="p-button-success"/>
+                    <Button label="Ajouter" icon="pi pi-plus" onClick={(e)=>props.user.addadresse} className="p-button-success"/>
                   </div>
                   }
       </div>
@@ -53,7 +57,7 @@ const MonComte = (props) => {
                 
                 <div className="col-sm-12 card mt-1">
                   <div className="card ml-1">
-                <ListeLocations/>
+                <ListeLocations locs="toto"/>
                 </div>
                 </div>  
   

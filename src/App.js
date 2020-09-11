@@ -60,7 +60,7 @@ class App extends Component {
     console.log(data)
   }
   
-  ajoutAdresse = event => {
+  ajoutAdresse = (event) => {
     console.log("ajout adresse")
     this.setState({modaladresse: true})
   }
@@ -128,7 +128,7 @@ class App extends Component {
     localStorage.setItem("username", response.data.user.username); 
     localStorage.setItem("email", response.data.user.email); 
     localStorage.setItem("token", response.data.jwt); 
-    localStorage.setItem("adresses", response.data.adresses); 
+    localStorage.setItem("adresses", []); 
     localStorage.setItem("userid", response.data.user._id);
     this.setState({user : {email: email, adresses: response.data.user.adresses, logged :true }})
     this.setState({modalvisible: false})
