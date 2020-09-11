@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 import ListeLocations from './listelocations';
 
 const MonComte = (props) => {
-
+  console.log(typeof(props.user.addadresse))
 
    
     return (
@@ -42,11 +42,11 @@ const MonComte = (props) => {
                     </ul>
                     <br/>
 
-                    <Button label="Ajouter" icon="pi pi-plus" onClick={(e)=>props.user.addadresse} className="p-button-success"/>
+                    <Button label="Ajouter adresse" icon="pi pi-plus" onClick={(e)=>props.user.addadresse(e)} className="p-button-success"/>
                   </div>
                   :
                   <div>
-                    <Button label="Ajouter" icon="pi pi-plus" onClick={(e)=>props.user.addadresse} className="p-button-success"/>
+                    <Button label="Ajouter adresse" icon="pi pi-plus" onClick={(e)=>props.user.addadresse(e)} className="p-button-success"/>
                   </div>
                   }
       </div>

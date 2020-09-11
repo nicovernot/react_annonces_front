@@ -43,7 +43,7 @@ class App extends Component {
           loggin:this.handleSubmit,
           logouts:this.logout,
           register:this.register,
-          addadresse: this.ajoutAdresse,
+          addadresse: this.addadresse,
         },
      modalvisible:false,
      register:false,
@@ -60,11 +60,7 @@ class App extends Component {
     console.log(data)
   }
   
-  ajoutAdresse = (event) => {
-    console.log("ajout adresse")
-    this.setState({modaladresse: true})
-  }
-  
+
   ajoutLocation = event => {
     console.log("ajout location")
   }
@@ -111,6 +107,12 @@ class App extends Component {
     window.location.href = "/";
   }
 
+  addadresse = (event,test) => {
+    console.log("ajout adresse",test)
+    this.setState({modaladresse: true})
+  }
+  
+
   register = (event,pwd,email,username) => {
     console.log(pwd + ' '+ email)
     event.preventDefault();
@@ -122,7 +124,6 @@ class App extends Component {
   })
   .then(response => {
     // Handle success.
-   
     this.setState({register:false})
     console.log('Well done!');
     localStorage.setItem("username", response.data.user.username); 
@@ -130,7 +131,7 @@ class App extends Component {
     localStorage.setItem("token", response.data.jwt); 
     localStorage.setItem("adresses", []); 
     localStorage.setItem("userid", response.data.user._id);
-    this.setState({user : {email: email, adresses: response.data.user.adresses, logged :true }})
+    this.setState({user : {email: email, addadresse: this.addadresse,adresses: response.data.user.adresses, logged :true }})
     this.setState({modalvisible: false})
 
   })
@@ -164,15 +165,15 @@ console.log(this.state.user.adresses)
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
           if(res.data.jwt){
-         
-          this.setState({user:{logginerror:false}})
-          localStorage.setItem("adresses", JSON.stringify(res.data.user.adresses));  
-          localStorage.setItem("email", res.data.user.email); 
-          localStorage.setItem("username", res.data.user.username); 
-          localStorage.setItem("token", res.data.jwt); 
-          localStorage.setItem("userid", res.data.user._id);
-          this.setState({user : {email: res.data.user.email,adresses: res.data.user.adresses,  logged :true }})
-          this.setState({modalvisible: false})
+            console.log(res.data.user)
+            this.setState({user:{logginerror:false}})
+            localStorage.setItem("adresses", JSON.stringify(res.data.user.adresses));  
+            localStorage.setItem("email", res.data.user.email); 
+            localStorage.setItem("username", res.data.user.username); 
+            localStorage.setItem("token", res.data.jwt); 
+            localStorage.setItem("userid", res.data.user._id);
+            this.setState({modalvisible: false})
+            this.setState({user : {email: res.data.user.email,addadresse: this.addadresse,adresses: res.data.user.adresses,  logged :true,username:res.data.user.username }})
          console.log(res)
         } 
       }).catch((error) => {
@@ -263,7 +264,7 @@ function Child(props) {
 }
 
 function renderSwitchmenu(id,user) {
-  console.log(id)
+  console.log(user)
   
   switch(id) {
     case 'maps':
