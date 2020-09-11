@@ -7,9 +7,6 @@ import ListeLocations from './listelocations';
 
 const MonComte = (props) => {
 
-   const openform = (Event) =>{
-     console.log("test")
-   }
 
    
     return (
