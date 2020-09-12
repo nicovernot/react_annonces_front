@@ -6,8 +6,6 @@ import { Button } from 'primereact/button';
 import ListeLocations from './listelocations';
 
 const MonComte = (props) => {
-  console.log(typeof(props.user.addadresse))
-
    
     return (
       <div>
@@ -24,6 +22,7 @@ const MonComte = (props) => {
       <li className="list-group-item"><p className="badge badge-secondary">Usename:</p> {props.user.username}</li>
       <li className="list-group-item"><p className="badge badge-secondary">Email:</p> {props.user.email}</li>
       </ul>
+      <Button label="Modifier" icon="pi pi-pencil" />
       </div>
       </div>
       <div className="col-sm-6 ">
@@ -42,11 +41,11 @@ const MonComte = (props) => {
                     </ul>
                     <br/>
 
-                    <Button label="Ajouter adresse" icon="pi pi-plus" onClick={(e)=>props.user.addadresse(e)} className="p-button-success"/>
+                    <Button label="Ajouter adresse" icon="pi pi-plus" onClick={(e)=>props.user.addadresse(e,1)} className="p-button-success"/>
                   </div>
                   :
                   <div>
-                    <Button label="Ajouter adresse" icon="pi pi-plus" onClick={(e)=>props.user.addadresse(e)} className="p-button-success"/>
+                    <Button label="Ajouter adresse" icon="pi pi-plus" onClick={(e)=>props.user.addadresse(e,1)} className="p-button-success"/>
                   </div>
                   }
       </div>
@@ -54,7 +53,7 @@ const MonComte = (props) => {
                 
                 <div className="col-sm-12 card mt-1">
                   <div className="card ml-1">
-                <ListeLocations locs="toto"/>
+                <ListeLocations />
                 </div>
                 </div>  
   

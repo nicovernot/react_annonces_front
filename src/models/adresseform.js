@@ -2,7 +2,7 @@ import React ,{useState,useEffect, } from 'react';
 import Form from 'react-bootstrap/Form'
 import axios from 'axios';
 import Button from 'react-bootstrap/Button'
-const AdresseForm = () => {
+const AdresseForm = (props) => {
     const [data, setData] = useState({ hits: [] });
     const [nomvoie, setNomvoie] = useState("");
     const [typevoie, setTypvoie] = useState("");
@@ -11,6 +11,7 @@ const AdresseForm = () => {
     const [nomville, setVille] = useState("");
     const [codepostal, setCodepostal] = useState("");
     const [errrempli, setErrRempli] = useState(false);
+   
     const valide = (event) =>{
      if(nomvoie && typevoie && departement && numvoie && nomville && codepostal){
        
@@ -29,13 +30,16 @@ const AdresseForm = () => {
             codepostal:"${codepostal.codepostal}",
             departement:"${departement.departement}",  
             user:"${localStorage.getItem("userid")}"}})
-          {adresse{id}}
+          {adresse{
+            id, nomvoie, numvoie, typevoie, codepostal, ville
+          
+          }}
           }
             `
         }
       }).then((result) => {
         console.log(result.data)
-       
+       props.action(event,2,result.data.data.createAdresse.adresse)
        
       });
       

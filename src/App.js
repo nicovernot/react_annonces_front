@@ -45,6 +45,7 @@ class App extends Component {
           register:this.register,
           addadresse: this.addadresse,
         },
+     role_entreprise:"5f5c6b6b7f803318bae13a1a",   
      modalvisible:false,
      register:false,
      modaladresse:false,
@@ -104,12 +105,21 @@ class App extends Component {
     localStorage.removeItem("username"); 
     localStorage.removeItem("adresses"); 
     localStorage.removeItem("userid"); 
+    localStorage.removeItem("role");
     window.location.href = "/";
   }
 
-  addadresse = (event,test) => {
-    console.log("ajout adresse",test)
-    this.setState({modaladresse: true})
+  addadresse = (event,choix,data) => {
+    if(choix===1){
+      this.setState({modaladresse: true})
+    }else{
+      console.log(data)
+      this.setState({modaladresse: false})
+      this.setState({
+       user: { ...this.state.user, adresses: [...this.state.user.adresses.concat(data) ]}
+      })
+      localStorage.setItem("adresses",this.state.user.adresses)
+    }
   }
   
 
@@ -131,7 +141,13 @@ class App extends Component {
     localStorage.setItem("token", response.data.jwt); 
     localStorage.setItem("adresses", []); 
     localStorage.setItem("userid", response.data.user._id);
-    this.setState({user : {email: email, addadresse: this.addadresse,adresses: response.data.user.adresses, logged :true }})
+    localStorage.setItem("role", response.data.user._id);
+    this.setState({user : {email: email, 
+      addadresse: this.addadresse,
+      role: response.data.user.role._id,
+      adresses: response.data.user.adresses, 
+      username:response.data.user.username,
+      logged :true }})
     this.setState({modalvisible: false})
 
   })
@@ -145,7 +161,7 @@ class App extends Component {
 
 
   componentDidMount() {
-console.log(this.state.user.adresses)
+
     fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus?_sort=ordre:ASC`)
       .then(res => res.json())
       .then(json => {
@@ -165,16 +181,22 @@ console.log(this.state.user.adresses)
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
           if(res.data.jwt){
-            console.log(res.data.user)
+            
             this.setState({user:{logginerror:false}})
             localStorage.setItem("adresses", JSON.stringify(res.data.user.adresses));  
             localStorage.setItem("email", res.data.user.email); 
             localStorage.setItem("username", res.data.user.username); 
             localStorage.setItem("token", res.data.jwt); 
+            localStorage.setItem("role", res.data.user.role._id); 
             localStorage.setItem("userid", res.data.user._id);
             this.setState({modalvisible: false})
-            this.setState({user : {email: res.data.user.email,addadresse: this.addadresse,adresses: res.data.user.adresses,  logged :true,username:res.data.user.username }})
-         console.log(res)
+            this.setState({user : {email: res.data.user.email,
+              addadresse: this.addadresse,
+              role: res.data.user.role._id,
+              adresses: res.data.user.adresses,  
+              logged :true,
+              username:res.data.user.username }})
+         
         } 
       }).catch((error) => {
         console.log(error)
@@ -215,7 +237,7 @@ console.log(this.state.user.adresses)
           </Dialog>
 
           <Dialog header="Ajout Adresse" visible={this.state.modaladresse} style={{width: '60vw'}} modal={true} onHide={() => this.setState({modaladresse: false})}>
-          <div><AdresseFrom/></div>
+          <div><AdresseFrom action={this.state.user.addadresse}/></div>
           </Dialog>
            <div className="container">
              <br/>
@@ -264,7 +286,7 @@ function Child(props) {
 }
 
 function renderSwitchmenu(id,user) {
-  console.log(user)
+ 
   
   switch(id) {
     case 'maps':
@@ -281,7 +303,7 @@ function renderSwitchmenu(id,user) {
 
     case 'espaceentreprise':
      
-      return <EspaceEntreprise urlpath={id}  />;
+      return <EspaceEntreprise user={user} urlpath={id}  />;
     case 'contact':
      
         return <Contact urlpath={id}  />;  
