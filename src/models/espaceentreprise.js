@@ -9,7 +9,7 @@ const Espace_entreprise = (props) => {
   <div className="container">
 <h1>      Espace Entreprise connecté  {props.user.username}</h1>
     <p>ici on aura l'espace entreprise</p>
-    {props.user.role_entreprise===props.user.role? 
+    {props.user.roleentreprise===props.user.role? 
     "oui"
     :
     <CreanEntreprise/>}
