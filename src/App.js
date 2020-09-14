@@ -201,7 +201,6 @@ class App extends Component {
               role: res.data.user.role._id,
               adresses: res.data.user.adresses,  
               logged :true,
-              role:res.data.user.role._id,
               username:res.data.user.username }})
          
         } 
