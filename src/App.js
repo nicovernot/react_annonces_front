@@ -32,10 +32,11 @@ class App extends Component {
     super(props);
     this.state = {
      user:{
-          role:"",
+          role:localStorage.getItem("role") ? localStorage.getItem("role"):"",
           email:localStorage.getItem("email") ? localStorage.getItem("email"):"",
           username:localStorage.getItem("username") ? localStorage.getItem("username"):"",
           password:"",
+          role_entreprise:"5f5c6b6b7f803318bae13a1a",
           logginerror:false,
           adresses:localStorage.getItem("adresses") ? JSON.parse(localStorage.getItem("adresses")):[],
           annonces:[],
@@ -45,7 +46,7 @@ class App extends Component {
           register:this.register,
           addadresse: this.addadresse,
         },
-     role_entreprise:"5f5c6b6b7f803318bae13a1a",   
+        
      modalvisible:false,
      register:false,
      modaladresse:false,
@@ -67,6 +68,10 @@ class App extends Component {
   }
   ajoutAnnoce = event => {
     console.log("ajout annonce")
+  }
+
+  modifuser = event => {
+    console.log("modifuser")
   }
 
   effacerAdresse = event => {
@@ -141,7 +146,7 @@ class App extends Component {
     localStorage.setItem("token", response.data.jwt); 
     localStorage.setItem("adresses", []); 
     localStorage.setItem("userid", response.data.user._id);
-    localStorage.setItem("role", response.data.user._id);
+    localStorage.setItem("role", response.data.user.role._id);
     this.setState({user : {email: email, 
       addadresse: this.addadresse,
       role: response.data.user.role._id,
@@ -181,7 +186,7 @@ class App extends Component {
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
           if(res.data.jwt){
-            
+            console.log(res.data.user.role._id)
             this.setState({user:{logginerror:false}})
             localStorage.setItem("adresses", JSON.stringify(res.data.user.adresses));  
             localStorage.setItem("email", res.data.user.email); 
@@ -189,12 +194,14 @@ class App extends Component {
             localStorage.setItem("token", res.data.jwt); 
             localStorage.setItem("role", res.data.user.role._id); 
             localStorage.setItem("userid", res.data.user._id);
+            localStorage.setItem("role",res.data.user.role._id)
             this.setState({modalvisible: false})
             this.setState({user : {email: res.data.user.email,
               addadresse: this.addadresse,
               role: res.data.user.role._id,
               adresses: res.data.user.adresses,  
               logged :true,
+              role:res.data.user.role._id,
               username:res.data.user.username }})
          
         } 

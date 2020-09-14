@@ -1,4 +1,5 @@
 import React from 'react';
+import CreanEntreprise from './crea_entreprise_form'
 const Espace_entreprise = (props) => {
     return ( 
         <div>
@@ -8,6 +9,11 @@ const Espace_entreprise = (props) => {
   <div className="container">
 <h1>      Espace Entreprise connecté  {props.user.username}</h1>
     <p>ici on aura l'espace entreprise</p>
+    {props.user.role_entreprise===props.user.role? 
+    "oui"
+    :
+    <CreanEntreprise/>}
+  
   </div>
 </div>:
 <div className="jumbotron jumbotron-fluid">
