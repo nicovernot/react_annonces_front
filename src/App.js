@@ -45,6 +45,7 @@ class App extends Component {
           logouts:this.logout,
           register:this.register,
           addadresse: this.addadresse,
+          updaterole: this.updaterole
         },
         
      modalvisible:false,
@@ -72,6 +73,14 @@ class App extends Component {
 
   modifuser = event => {
     console.log("modifuser")
+  }
+  updaterole = (event,data) => {
+    console.log("udpate role")
+    this.setState({
+      user: { ...this.state.user, role: data}
+     })
+     localStorage.setItem("role",this.state.user.role)
+
   }
 
   effacerAdresse = event => {
@@ -152,6 +161,8 @@ class App extends Component {
       role: response.data.user.role._id,
       adresses: response.data.user.adresses, 
       username:response.data.user.username,
+      r_entreprise:"5f5c6b6b7f803318bae13a1a",
+      updaterole:this.updaterole,
       logged :true }})
     this.setState({modalvisible: false})
 
@@ -199,7 +210,9 @@ class App extends Component {
             this.setState({user : {email: res.data.user.email,
               addadresse: this.addadresse,
               role: res.data.user.role._id,
-              adresses: res.data.user.adresses,  
+              adresses: res.data.user.adresses, 
+              updaterole:this.updaterole, 
+              r_entreprise:"5f5c6b6b7f803318bae13a1a",
               logged :true,
               username:res.data.user.username }})
          

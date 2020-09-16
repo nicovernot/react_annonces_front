@@ -1,13 +1,16 @@
-import React from 'react';
+import React,{useState,} from 'react';
 import axios from 'axios';
 import Button from 'react-bootstrap/Button'
+import EntrepriseForm from './entrepriseform'
 
-const CreaEntrprise = () => {
-
+const CreaEntreprise = (props) => {
+   
     const userid = localStorage.getItem('userid')
+    const [roleupd, setRoleupt] = useState(false);
+    const [roleid, setRolid] = useState("");
 
     const valide = (event) =>{
-        if(userid){
+        
           
          axios({
            url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
@@ -21,31 +24,41 @@ const CreaEntrprise = () => {
                      {id:"${userid}"}
                      data:{role:"5f5c6b6b7f803318bae13a1a"}}){
                    user{id
-                   role{name}
+                   role{id}
                    }
                    }
                
                }`
            }
          }).then((result) => {
-           console.log(result.data)
-        
           
+          //props.user.updaterole(event,result.data.data.updateUser.user.role.id)
+          setRoleupt(true)
+          setRolid(result.data.data.updateUser.user.role.id)
          });
          
             console.log("click")
-        }else{
-           //else
-        }
+        
        }
     
     
     return ( 
     <div>
-        <Button onClick={(e)=> valide()}>Créer compte Entreprise</Button>
+
+
+
+
+      {
+
+              roleupd  ? 
+          <EntrepriseForm user={props.user} roid={roleid}/>
+           :
+           <Button onClick={(e)=> valide()}>Créer compte Entreprise</Button>
+           
+      }
     </div>
 
      );
 }
  
-export default CreaEntrprise;
+export default CreaEntreprise;
