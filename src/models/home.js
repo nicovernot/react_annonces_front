@@ -17,14 +17,14 @@ const Home = (props) => {
     console.log(key)
   }
   const blorder = bl.sort((a, b) => {return a.ordre > b.ordre })
-
+ console.log(blorder)
   const blocktext = blorder.map((item,key) =>
   <div key={key} className={item.className}>
 
 <div className="col-sm-6 bg-primary text-white">
 <Reveal repeat>
   <Tween from={{ opacity: 0 }} duration={2}>
-<h2>{item.title}</h2>
+<h3>{item.title}</h3>
   </Tween>
 </Reveal>
 <ReactMarkdown

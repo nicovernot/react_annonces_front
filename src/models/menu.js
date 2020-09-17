@@ -12,7 +12,7 @@ const Menu = (props) => {
     const menulist = props.menu.filter(men => men.visible === true).map((men,key)=>
     <li key={key} className="nav-item">
       {logged && !men.public ? 
-      <Link  className={men.className} to={men.url}><i className={men.icon} style={{'fontSize': '1em'}}></i>{men.label}</Link>
+      <Link  className={men.className}   to={men.url}><i className={men.icon} style={{'fontSize': '1em'}}></i>{men.label}</Link>
       : 
       ''
       }
@@ -23,7 +23,7 @@ const Menu = (props) => {
       }
     
       {logged && men.public ? 
-      <Link  className={men.className} to={men.url}><i className={men.icon} style={{'fontSize': '1em'}}></i>{men.label}</Link>
+      <Link  className={men.className}  to={men.url}><i className={men.icon} style={{'fontSize': '1em'}}></i>{men.label}</Link>
       : 
       ''
       }
