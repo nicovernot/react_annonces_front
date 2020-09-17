@@ -37,7 +37,7 @@ const Home = (props) => {
   <Reveal key={key} repeat trigger={<div />}>
   <FadeInLeft>
     
-  <img className="rounded-circle center-block" src={img.url}/>
+  <img alt="img" className="rounded-circle center-block" src={img.url}/>
   </FadeInLeft>
 </Reveal>
   
