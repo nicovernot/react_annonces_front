@@ -14,7 +14,7 @@ const Home = (props) => {
   let bl = []
   for (const [key, value] of Object.entries(props.menu)) {
     bl = value.blocktexts
-    console.log(key)
+    
   }
   const blorder = bl.sort((a, b) => {return a.ordre > b.ordre })
 
@@ -36,8 +36,10 @@ const Home = (props) => {
   {item.image.map((img,key)=> (
   <Reveal key={key} repeat trigger={<div />}>
   <FadeInLeft>
-    
-  <img alt="img" className="rounded-circle center-block" src={img.url}/>
+    <br/>
+  <h4>{img.caption}</h4>
+  <img alt="img" className="rounded-circle justify-content-center" src={img.url}/>
+  <br/>
   </FadeInLeft>
 </Reveal>
   

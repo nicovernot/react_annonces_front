@@ -182,7 +182,7 @@ class App extends Component {
     fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus?_sort=ordre:ASC`)
       .then(res => res.json())
       .then(json => {
-      console.log(json)
+
         this.setState({ datamenu: json })
       }
         );
