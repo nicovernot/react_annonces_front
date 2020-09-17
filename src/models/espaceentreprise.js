@@ -22,6 +22,7 @@ const Espace_entreprise = (props) => {
   <div className="container">
     <h1>      Espace Entreprise</h1>
     <p>ici on aura l'espace entreprise</p>
+
   </div>
 </div>
 }

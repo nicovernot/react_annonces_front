@@ -23,6 +23,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
   useLocation,
   useParams,
 } from "react-router-dom";
@@ -181,7 +182,7 @@ class App extends Component {
     fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus?_sort=ordre:ASC`)
       .then(res => res.json())
       .then(json => {
-     
+      console.log(json)
         this.setState({ datamenu: json })
       }
         );
@@ -231,7 +232,7 @@ class App extends Component {
   }
 
   render() { 
-   
+
     return (  
       <div >
          <Router>
@@ -264,8 +265,13 @@ class App extends Component {
            {this.state.user.logged && this.state.user.adresses.length === 0  ?   <Alert/>:""}
            
           <Switch>
-              <Route path="/:id"  children={<Child user={this.state.user} />} />
-              <Route path="/"  children={<Home user={this.state.user} />} />
+              <Route path="/:id"   children={<Child menu={this.state.datamenu} user={this.state.user} />} />
+              location will override the current location in the history stack, like server-side redirects (HTTP 3xx) do.
+
+<Route exact path="/">
+  <Redirect to="/home" /> 
+</Route>
+
           </Switch>  
            </div>
 
@@ -286,7 +292,7 @@ function Child(props) {
       <div className="content center ">
 
       <div  >
-      {renderSwitchmenu(id,props.user)}
+      {renderSwitchmenu(id,props.user,props.menu)}
       </div>
 
       <div >
@@ -304,9 +310,10 @@ function Child(props) {
   );
 }
 
-function renderSwitchmenu(id,user) {
- 
-  
+function renderSwitchmenu(id,user,menu) {
+
+ const filtered = menu.filter(menu => menu.url === id)
+
   switch(id) {
     case 'maps':
      
@@ -314,7 +321,7 @@ function renderSwitchmenu(id,user) {
 
     case 'home':
      
-  return <Home urlpath={id}  />;
+  return <Home urlpath={id} menu={filtered} />;
 
     case 'moncompte':
      
