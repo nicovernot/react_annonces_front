@@ -14,7 +14,7 @@ const Home = (props) => {
   let bl = []
   for (const [key, value] of Object.entries(props.menu)) {
     bl = value.blocktexts
-    
+    console.log(key)
   }
   const blorder = bl.sort((a, b) => {return a.ordre > b.ordre })
 
