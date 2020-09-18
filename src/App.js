@@ -19,6 +19,7 @@ import EspaceEntreprise from './models/espaceentreprise'
 import axios from 'axios';
 import EspaceHote from './models/espacehote'
 import Alert from './models/alert'
+import Footer from './models/footer'
 import {
   BrowserRouter as Router,
   Switch,
@@ -263,10 +264,12 @@ class App extends Component {
              <br/>
              
            {this.state.user.logged && this.state.user.adresses.length === 0  ?   <Alert/>:""}
-           
+
+<br/>
+<br/>  
+<br/>         
           <Switch>
               <Route path="/:id"   children={<Child menu={this.state.datamenu} user={this.state.user} />} />
-              location will override the current location in the history stack, like server-side redirects (HTTP 3xx) do.
 
 <Route exact path="/">
   <Redirect to="/home" /> 
@@ -276,7 +279,7 @@ class App extends Component {
            </div>
 
          </Router>
-
+       <Footer/>
       </div>
     );
   }

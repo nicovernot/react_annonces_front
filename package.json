@@ -19,7 +19,7 @@
     "graphql": "^15.3.0",
     "graphql-tag": "^2.10.4",
     "gsap": "^3.5.1",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "primeflex": "^2.0.0-rc.1",
     "primeicons": "^4.0.0",
     "primereact": "^4.2.2",

@@ -16,17 +16,20 @@ const Home = (props) => {
     bl = value.blocktexts
     console.log(key)
   }
-  const blorder = bl.sort((a, b) => {return a.ordre > b.ordre })
+  const blorder = bl.sort((a, b) => {return a.ordre - b.ordre })
  console.log(blorder)
   const blocktext = blorder.map((item,key) =>
   <div key={key} className={item.className}>
-
-<div className="col-sm-6 bg-primary text-white">
+<br/>
+<br/>
 <Reveal repeat>
   <Tween from={{ opacity: 0 }} duration={2}>
-<h3>{item.title}</h3>
+<h3 className="col-sm-12 bg-light">{item.title}</h3>
+<br/>
+<br/>
   </Tween>
 </Reveal>
+<div className="col-sm-6 bg-primary text-white card">
 <ReactMarkdown
  source={item.descrtiption}
  escapeHtml={false}
@@ -38,6 +41,7 @@ const Home = (props) => {
   <FadeInLeft>
     <br/>
   <h4>{img.caption}</h4>
+  <br/>
   <img alt="img" className="rounded-circle justify-content-center" src={img.url}/>
   <br/>
   </FadeInLeft>
