@@ -332,7 +332,7 @@ function renderSwitchmenu(id,user,menu) {
 
     case 'espaceentreprise':
      
-      return <EspaceEntreprise user={user} urlpath={id}  />;
+      return <EspaceEntreprise user={user} urlpath={id} menu={filtered} />;
     case 'contact':
      
         return <Contact urlpath={id}  />;  
