@@ -4,6 +4,7 @@ Redirect
  } from "react-router-dom";
 import { Button } from 'primereact/button';
 import ListeLocations from './listelocations';
+import ListeAnnonces from './listeAnnonces';
 
 const MonComte = (props) => {
    
@@ -53,7 +54,10 @@ const MonComte = (props) => {
                 
                 <div className="col-sm-12 card mt-1">
                   <div className="card ml-1">
-                <ListeLocations />
+                <ListeLocations user={props.user} />
+                </div>
+                <div className="card ml-1">
+                <ListeAnnonces user={props.user} />
                 </div>
                 </div>  
   

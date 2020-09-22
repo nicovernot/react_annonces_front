@@ -47,7 +47,9 @@ class App extends Component {
           logouts:this.logout,
           register:this.register,
           addadresse: this.addadresse,
-          updaterole: this.updaterole
+          updaterole: this.updaterole,
+          selogger: this.selogger,
+          ajoutAnnoce: this.ajoutAnnoce
         },
         
      modalvisible:false,
@@ -340,8 +342,11 @@ function renderSwitchmenu(id,user,menu) {
      
         return <EspaceHote urlpath={id}  />;  
     case 'register':
-     
-      return <Register urlpath={id}  />;
+      
+      return <Register user={user} urlpath={id}  />;
+    case 'login':
+        
+        return <Login user={user} urlpath={id}  />;  
 
     default:
       return <ErrorPage/>

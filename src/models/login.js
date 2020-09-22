@@ -1,4 +1,3 @@
-// @flow
 import  React,{ useState, } from 'react';
 import 'primeflex/primeflex.css';
 import {Password} from 'primereact/password';
@@ -10,9 +9,7 @@ export function Login(props) {
   const [pwd, setPwd] = useState("");
   const [email, setEmail] = useState("");
   const [err,setErr] = useState(false)
- // const validation= (event) => {
- //   event.preventDefault();
- //     } 
+
  
   return (
   <div className="p-fluid">
