@@ -42,10 +42,7 @@ const CreaAnnonceForm = (props) => {
        
       } 
         }
-        const test  = e => {
-          console.log("test")
-        }
-
+       
 
     return ( 
         <form>
