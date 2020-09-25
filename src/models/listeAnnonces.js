@@ -10,8 +10,8 @@ const ListeAnnonces = (props) => {
                 <div className="jumbotron jumbotron-fluid">
                 <div className="container">
                     <h1>      Liste Annonces</h1>
-                    <Button label="Show" icon="pi pi-external-link" onClick={(e) => setDisplayBasic({displayBasic:true})} />
-                    <Dialog header="Header" visible={displayBasic} style={{ width: '80vw' }}  onHide={(e) => setDisplayBasic(false)}>
+                    <Button label="Ajout Annonce" icon="pi pi-external-link" onClick={(e) => setDisplayBasic({displayBasic:true})} />
+                    <Dialog header="Creation annonce" visible={displayBasic} style={{ width: '80vw' }}  onHide={(e) => setDisplayBasic(false)}>
                         <CreaAnnonceForm user={props.user}/>
                     </Dialog>
                 </div>
