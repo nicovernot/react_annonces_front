@@ -12,7 +12,7 @@ const ListeAnnonces = (props) => {
                     <h1>      Liste Annonces</h1>
                     <Button label="Ajout Annonce" icon="pi pi-external-link" onClick={(e) => setDisplayBasic({displayBasic:true})} />
                     <Dialog header="Creation annonce" visible={displayBasic} style={{ width: '80vw' }}  onHide={(e) => setDisplayBasic(false)}>
-                        <CreaAnnonceForm user={props.user}/>
+                        <CreaAnnonceForm visible={setDisplayBasic} user={props.user}/>
                     </Dialog>
                 </div>
                 </div>

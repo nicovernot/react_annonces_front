@@ -41,7 +41,7 @@ class App extends Component {
           r_entreprise:"5f5c6b6b7f803318bae13a1a",
           logginerror:false,
           adresses:localStorage.getItem("adresses") ? JSON.parse(localStorage.getItem("adresses")):[],
-          annonces:[],
+          annonces:localStorage.getItem("annonces") ? JSON.parse(localStorage.getItem("annonces")):[],
           logged:localStorage.getItem("token") ? true:false,
           loggin:this.handleSubmit,
           logouts:this.logout,
@@ -49,7 +49,7 @@ class App extends Component {
           addadresse: this.addadresse,
           updaterole: this.updaterole,
           selogger: this.selogger,
-          ajoutAnnoce: this.ajoutAnnoce
+          ajoutAnnonce: this.ajoutAnnonce
         },
         
      modalvisible:false,
@@ -71,8 +71,12 @@ class App extends Component {
   ajoutLocation = event => {
     console.log("ajout location")
   }
-  ajoutAnnoce = event => {
-    console.log("ajout annonce")
+  ajoutAnnonce = (event,annonce) => {
+    console.log(annonce)
+    this.setState({
+      user: { ...this.state.user, annonces: [...this.state.user.annonces.concat(annonce) ] }
+     })
+     localStorage.setItem("annonces",JSON.stringify(this.state.user.annonces))
   }
 
   modifuser = event => {
@@ -124,6 +128,7 @@ class App extends Component {
     localStorage.removeItem("adresses"); 
     localStorage.removeItem("userid"); 
     localStorage.removeItem("role");
+    localStorage.removeItem("annonces");
     window.location.href = "/";
   }
 
@@ -201,7 +206,7 @@ class App extends Component {
       axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
           if(res.data.jwt){
-            console.log(res.data.user.role._id)
+           
             this.setState({user:{logginerror:false}})
             localStorage.setItem("adresses", JSON.stringify(res.data.user.adresses));  
             localStorage.setItem("email", res.data.user.email); 
@@ -209,13 +214,16 @@ class App extends Component {
             localStorage.setItem("token", res.data.jwt); 
             localStorage.setItem("role", res.data.user.role._id); 
             localStorage.setItem("userid", res.data.user._id);
+            localStorage.setItem("annonces", JSON.stringify(res.data.user.annonces));
             localStorage.setItem("role",res.data.user.role._id)
             this.setState({modalvisible: false})
             this.setState({user : {email: res.data.user.email,
               addadresse: this.addadresse,
               role: res.data.user.role._id,
               adresses: res.data.user.adresses, 
+              annonces: res.data.user.annonces,
               updaterole:this.updaterole, 
+              ajoutAnnonce: this.ajoutAnnonce,
               r_entreprise:"5f5c6b6b7f803318bae13a1a",
               logged :true,
               username:res.data.user.username }})

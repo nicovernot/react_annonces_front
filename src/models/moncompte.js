@@ -1,13 +1,15 @@
-import React from 'react';
+import React,{ Component } from 'react';
 import {
 Redirect
  } from "react-router-dom";
 import { Button } from 'primereact/button';
 import ListeLocations from './listelocations';
 import ListeAnnonces from './listeAnnonces';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
 
 const MonComte = (props) => {
-   
+    console.log(props.user.annonces)
     return (
       <div>
 
@@ -58,6 +60,16 @@ const MonComte = (props) => {
                 </div>
                 <div className="card ml-1">
                 <ListeAnnonces user={props.user} />
+                <div>
+                <div className="card">
+                    <DataTable value={props.user.annonces} className="p-datatable-striped">
+                        <Column field="titre" header="Titre"></Column>
+                        <Column field="createdAt" header="Date"></Column>
+                        <Column field="tarif_heure" header="Tarif"></Column>
+                        <Column field="active" header="Actif"></Column>
+                    </DataTable>
+                </div>
+            </div>
                 </div>
                 </div>  
   

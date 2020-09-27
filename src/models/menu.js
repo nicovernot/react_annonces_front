@@ -31,7 +31,7 @@ const Menu = (props) => {
     ) 
   
     return (
-<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="fixed-top">
+<Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" className="fixed-top">
   <Navbar.Brand href="/">Redma</Navbar.Brand>
   <Navbar.Collapse  id="responsive-navbar-nav">
     <Nav className="mr-auto">
