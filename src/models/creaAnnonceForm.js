@@ -18,6 +18,7 @@ const CreaAnnonceForm = (props) => {
     const [chauffage, setChauf] = useState(false)
 
     const valide = (event) =>{
+  
       if(titre && editorval && adr && prix ){
       axios({
 
@@ -115,7 +116,7 @@ const CreaAnnonceForm = (props) => {
           <h6>Choix adresse</h6>
           {props.user.adresses.map((adr,key)=>
                       <div key={key} className="form-group">
-                      <RadioButton name="adresse" onChange={(e) => setAdr({adr:e.value})} checked={adr === adr.id} />
+                      <RadioButton name="adresse" value={adr.id} onChange={(e) => setAdr({adr:e.value})} checked={adr === adr.id} />
                       <label htmlFor="adresse"><i className="pi pi-map-marker"></i> {adr.numvoie} {adr.typevoie} {adr.nomvoie} {adr.ville}</label>
                     </div>
           )}              
