@@ -115,7 +115,7 @@ const CreaAnnonceForm = (props) => {
           <h6>Choix adresse</h6>
           {props.user.adresses.map((adr,key)=>
                       <div key={key} className="form-group">
-                      <RadioButton checked={adr.id} icon='' name="adresse" onChange={(e) => setAdr({adr:e.value})} checked={adr === adr.id} />
+                      <RadioButton name="adresse" onChange={(e) => setAdr({adr:e.value})} checked={adr === adr.id} />
                       <label htmlFor="adresse"><i className="pi pi-map-marker"></i> {adr.numvoie} {adr.typevoie} {adr.nomvoie} {adr.ville}</label>
                     </div>
           )}              
