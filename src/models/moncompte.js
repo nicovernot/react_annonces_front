@@ -9,7 +9,9 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
 const MonComte = (props) => {
-    console.log(props.user.annonces)
+ const statusBodyTemplate = (rowData)=> {
+    return <span className={`badge badge-secondary`}>{rowData.active ? <i className="pi pi-check p-mr-2"></i> :""}</span>;
+}
     return (
       <div>
 
@@ -66,7 +68,7 @@ const MonComte = (props) => {
                         <Column field="titre" header="Titre"></Column>
                         <Column field="createdAt" header="Date"></Column>
                         <Column field="tarif_heure" header="Tarif"></Column>
-                        <Column field="active" header="Actif"></Column>
+                        <Column field="active" header="Actif" body={statusBodyTemplate}></Column>
                     </DataTable>
                 </div>
             </div>

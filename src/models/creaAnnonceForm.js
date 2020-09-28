@@ -45,13 +45,14 @@ const CreaAnnonceForm = (props) => {
             {annonce{
               id
               titre
-              createdAt 
+              createdAt
+              tarif_heure 
             }}
             }`
           }
         }).then((result) => {
-         console.log(result)
-         props.user.ajoutAnnonce(event,result.data.data.createAnnonce)
+         console.log(result.data.data)
+         props.user.ajoutAnnonce(event,result.data.data.createAnnonce.annonce)
          props.visible(false)
 
          //setRoleupt(true)
