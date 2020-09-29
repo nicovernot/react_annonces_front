@@ -24,6 +24,10 @@
   color: white;
 }
 
+.leaflet-container {
+  width: 60%;
+  height: 60vh;
+}
 .App-link {
   color: #61dafb;
 }

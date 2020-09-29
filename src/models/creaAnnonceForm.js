@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button'
 import axios from 'axios';
 import { RadioButton } from 'primereact/radiobutton';
 import {InputSwitch} from 'primereact/inputswitch';
-
+import Upload from './upload'
 const CreaAnnonceForm = (props) => {
 
     const [ editorval, setEditval] = useState("");
@@ -16,9 +16,10 @@ const CreaAnnonceForm = (props) => {
     const [cafetiere, setCafe] = useState(false)
     const [clim, setClim] = useState(false)
     const [chauffage, setChauf] = useState(false)
+    const [idAnnonce,setIdAnnonce] = useState("")
 
     const valide = (event) =>{
-  
+      const tq ="createAnnonce"
       if(titre && editorval && adr && prix ){
       axios({
 
@@ -27,7 +28,7 @@ const CreaAnnonceForm = (props) => {
           headers: {'Authorization': 'Bearer '+localStorage.getItem('token')},
           data: {
             query: `
-            mutation {createAnnonce
+            mutation { ${tq}
               (input:{data:
             {titre: "${titre.titre}",
             adress: "${adr.adr}", 
@@ -53,7 +54,7 @@ const CreaAnnonceForm = (props) => {
         }).then((result) => {
          console.log(result.data.data)
          props.user.ajoutAnnonce(event,result.data.data.createAnnonce.annonce)
-         props.visible(false)
+         setIdAnnonce({idAnnonce:result.data.data.createAnnonce.annonce.id})
 
          //setRoleupt(true)
         // setRolid(result.data.data.updateUser.user.role.id)
@@ -105,6 +106,8 @@ const CreaAnnonceForm = (props) => {
             console.log(equip)
            
     return ( 
+      <div>
+       { !idAnnonce ?
         <form>
           <div className="form-group">
             <label htmlFor="titre">Titre</label>
@@ -154,10 +157,15 @@ const CreaAnnonceForm = (props) => {
               
               <Button id="valide" onClick={(e)=> valide()}>Créer une annonce</Button>
             </div>
-
-          
           
         </form>
+            :
+
+            <Upload idannonce={idAnnonce.idAnnonce} visible={props.visible}/>
+            
+            }
+
+          </div>
         
      );
 }

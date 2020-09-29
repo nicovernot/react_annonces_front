@@ -20,6 +20,7 @@ import axios from 'axios';
 import EspaceHote from './models/espacehote'
 import Alert from './models/alert'
 import Footer from './models/footer'
+import './App.css'
 import {
   BrowserRouter as Router,
   Switch,
