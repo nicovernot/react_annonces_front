@@ -133,24 +133,24 @@ const CreaAnnonceForm = (props) => {
             <div className="form-group">
 
             <h5>Wifi</h5>
-            <InputSwitch  checked={wifi} name="Wifi" onChange={(e) =>setWifi({wifi:e.target.value})}/>
+            <InputSwitch  checked={wifi.wifi} name="Wifi" onChange={(e) =>setWifi({wifi:e.target.value})}/>
             </div>
 
             <div className="form-group">
 
             <h5>Clim</h5>
-            <InputSwitch  checked={clim} name="Wifi" onChange={(e) => setClim({clim:e.value})}/>
+            <InputSwitch  checked={clim.clim} name="Wifi" onChange={(e) => setClim({clim:e.value})}/>
             </div>
             <div className="form-group">
 
               <h5>Machine à café</h5>
-              <InputSwitch  checked={cafetiere} name="cafetiere" onChange={ (e) => setCafe({cafetiere:e.value})}/>
+              <InputSwitch  checked={cafetiere.cafetiere} name="cafetiere" onChange={ (e) => setCafe({cafetiere:e.value})}/>
             </div>
 
             <div className="form-group">
 
             <h5>Chauffage</h5>
-            <InputSwitch  checked={chauffage} name="Wifi" onChange={ (e) => setChauf({chauffage:e.value})}/>
+            <InputSwitch  checked={chauffage.chauffage} name="Wifi" onChange={ (e) => setChauf({chauffage:e.value})}/>
             </div>
      
             <div className="form-group">

@@ -19,8 +19,12 @@ const  onImageChange = event => {
         const formData = new FormData();
         Array.from(images.images).forEach(image => {
           formData.append('files', image);
+          formData.append('ref','annonce')
+          formData.append('refId',props.idannonce)
+          formData.append('field','photos')
+       
         });
-    
+
         axios
           .post(`http://localhost:1337/upload`, formData, {
             headers: { 'Content-Type': 'multipart/form-data','Authorization': 'Bearer '+localStorage.getItem('token') },
@@ -41,9 +45,10 @@ const  onImageChange = event => {
           onChange={onImageChange}
           alt="image"
         />
-          <input type="text" name="ref" value="annonces" />
+          <input type="text" name="ref" value="annonce" />
           <input type="text" name="refId" value={props.idannonce} />
           <input type="text" name="field" value="photos" />
+          <input type="text" name="source" value="upload" />
         <br />
         <button type="submit">Send</button>
       </form> );
