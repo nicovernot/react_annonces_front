@@ -12,7 +12,7 @@ const EntrepriseForm = (props) => {
         if(nom && tel && siren){
           
          axios({
-           url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
+           url: process.env.REACT_APP_URL_HOST+`/graphql`,
            method: 'post',
            headers: {'Authorization': 'Bearer '+localStorage.getItem('token')},
            data: {

@@ -16,7 +16,7 @@ const AdresseForm = (props) => {
      if(nomvoie && typevoie && departement && numvoie && nomville && codepostal){
        
       axios({
-        url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
+        url: process.env.REACT_APP_URL_HOST+`/graphql`,
         method: 'post',
         headers: {'Authorization': 'Bearer '+localStorage.getItem('token')},
         data: {
@@ -52,7 +52,7 @@ const AdresseForm = (props) => {
       
       const fetchData = async () => {
         const result = await axios({
-            url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
+            url: process.env.REACT_APP_URL_HOST+`/graphql`,
             method: 'post',
             data: {
               query: `

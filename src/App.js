@@ -151,7 +151,7 @@ class App extends Component {
     console.log(pwd + ' '+ email)
     event.preventDefault();
     axios
-  .post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local/register`, {
+  .post(process.env.REACT_APP_URL_HOST+`/auth/local/register`, {
     username: username,
     email: email,
     password: pwd,
@@ -188,7 +188,7 @@ class App extends Component {
 
   componentDidMount() {
 
-    fetch(`http://`+process.env.REACT_APP_URL_HOST+`/menus?_sort=ordre:ASC`)
+    fetch(process.env.REACT_APP_URL_HOST+`/menus?_sort=ordre:ASC`)
       .then(res => res.json())
       .then(json => {
 
@@ -204,7 +204,7 @@ class App extends Component {
     event.preventDefault();
     if(pwd && email){
 
-      axios.post(`http://`+process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
+      axios.post(process.env.REACT_APP_URL_HOST+`/auth/local`, { "identifier":email.email,"password":pwd.pwd })
       .then(res => {
           if(res.data.jwt){
            

@@ -15,7 +15,7 @@ const Contact = () => {
     setValide({valide:true})
     if(valide) console.log(email)
       axios({
-        url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
+        url: process.env.REACT_APP_URL_HOST+`/graphql`,
         method: 'post',
         data: {
           query: `
@@ -29,7 +29,7 @@ const Contact = () => {
       }).then((result) => {
         console.log(result.data)
        
-        window.location.href = "/";
+       window.location.href = "/";
       });
     }
     }

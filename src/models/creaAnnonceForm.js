@@ -23,7 +23,7 @@ const CreaAnnonceForm = (props) => {
       if(titre && editorval && adr && prix ){
       axios({
 
-          url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
+          url: process.env.REACT_APP_URL_HOST+`/graphql`,
           method: 'post',
           headers: {'Authorization': 'Bearer '+localStorage.getItem('token')},
           data: {
@@ -69,7 +69,7 @@ const CreaAnnonceForm = (props) => {
       
           const fetchData = async () => {
             const result = await axios({
-                url: `http://`+process.env.REACT_APP_URL_HOST+`/graphql`,
+                url: process.env.REACT_APP_URL_HOST+`/graphql`,
                 method: 'post',
                 data: {
                   query: `
