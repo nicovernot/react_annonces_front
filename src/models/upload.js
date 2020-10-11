@@ -26,7 +26,7 @@ const  onImageChange = event => {
         });
 
         axios
-          .post(`http://localhost:1337/upload`, formData, {
+          .post(process.env.REACT_APP_URL_HOST+`/upload`, formData, {
             headers: { 'Content-Type': 'multipart/form-data','Authorization': 'Bearer '+localStorage.getItem('token') },
           })
           .then(res => {
