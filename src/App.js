@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import Login from './models/login'
 import ErrorPage from './models/erropage'
 import Menu from './models/menu'
-import loggiin from './services/loginservice'
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -30,6 +29,7 @@ import {
   useParams,
 } from "react-router-dom";
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -41,6 +41,10 @@ class App extends Component {
           password:"",
           r_entreprise:"5f5c6b6b7f803318bae13a1a",
           logginerror:false,
+          location:{
+            longitud:0,
+          latitud:0,
+          },
           adresses:localStorage.getItem("adresses") ? JSON.parse(localStorage.getItem("adresses")):[],
           annonces:localStorage.getItem("annonces") ? JSON.parse(localStorage.getItem("annonces")):[],
           logged:localStorage.getItem("token") ? true:false,
@@ -50,7 +54,9 @@ class App extends Component {
           addadresse: this.addadresse,
           updaterole: this.updaterole,
           selogger: this.selogger,
-          ajoutAnnonce: this.ajoutAnnonce
+          effacerAdresse:this.effacerAdresse,
+          ajoutAnnonce: this.ajoutAnnonce,
+          setLocation: this.setLocation
         },
         
      modalvisible:false,
@@ -60,15 +66,12 @@ class App extends Component {
      
       }
   }
-  getData = event => {
-    const data =  loggiin("najvnajv","toto@aol.com")
-    data.then(resp =>{
-      console.log(resp)
-    })
-    console.log(data)
-  }
   
-
+ setLocation = (longi,latitud) => {
+  this.setState({
+    user: { ...this.state.user, location: {latitud:latitud,longitud:longi}}
+   })
+ }
   ajoutLocation = event => {
     console.log("ajout location")
   }
@@ -83,8 +86,9 @@ class App extends Component {
   modifuser = event => {
     console.log("modifuser")
   }
+  
   updaterole = (event,data) => {
-    console.log("udpate role")
+    
     this.setState({
       user: { ...this.state.user, role: data}
      })
@@ -92,8 +96,13 @@ class App extends Component {
 
   }
 
-  effacerAdresse = event => {
-    console.log("effacer adresse")
+  effacerAdresse = (event,id) => {
+    console.log("effacer adresse "+id)
+    const data = this.state.user.adresses.filter(i => i.id !== id)
+    this.setState({
+      user: { ...this.state.user, adresses: data}
+     })
+     localStorage.setItem("adresses",JSON.stringify(this.state.user.adresses))
   }
   
   effacerLocation = event => {
@@ -103,15 +112,22 @@ class App extends Component {
     console.log("effacer annonce")
   }
 
-  modifAdresse = event => {
+  modifAnnonce = event => {
     console.log("modif adresse")
+
   }
   
   modifLocation = event => {
     console.log("modif location")
   }
-  modifAnnoce = event => {
-    console.log("modif annonce")
+  modifAdresse = (event,data) => {
+    data.departement = data.departement.id
+    const datafiltered = this.state.user.adresses.filter(i => i.id !== data.id)
+     console.log(data)
+    this.setState({
+      user: { ...this.state.user, adresses: [...datafiltered.concat(data) ]}
+     })
+     localStorage.setItem("adresses",JSON.stringify(this.state.user.adresses))
   }
 
   selogger = event => {
@@ -137,12 +153,12 @@ class App extends Component {
     if(choix===1){
       this.setState({modaladresse: true})
     }else{
-      console.log(data)
+      
       this.setState({modaladresse: false})
       this.setState({
        user: { ...this.state.user, adresses: [...this.state.user.adresses.concat(data) ]}
       })
-      localStorage.setItem("adresses",this.state.user.adresses)
+      localStorage.setItem("adresses",JSON.stringify(this.state.user.adresses))
     }
   }
   
@@ -173,6 +189,10 @@ class App extends Component {
       username:response.data.user.username,
       r_entreprise:"5f5c6b6b7f803318bae13a1a",
       updaterole:this.updaterole,
+      effacerAdresse: this.effacerAdresse,
+      ajoutAnnonce: this.ajoutAnnonce,
+      modfifAdresse:this.modifAdresse,
+      setLocation:this.setLocation,
       logged :true }})
     this.setState({modalvisible: false})
 
@@ -224,7 +244,10 @@ class App extends Component {
               adresses: res.data.user.adresses, 
               annonces: res.data.user.annonces,
               updaterole:this.updaterole, 
+              effacerAdresse: this.effacerAdresse,
               ajoutAnnonce: this.ajoutAnnonce,
+              modfifAdresse:this.modifAdresse,
+              setLocation:this.setLocation,
               r_entreprise:"5f5c6b6b7f803318bae13a1a",
               logged :true,
               username:res.data.user.username }})
@@ -331,7 +354,7 @@ function renderSwitchmenu(id,user,menu) {
   switch(id) {
     case 'maps':
      
-    return <Map par={id}/>;
+    return <Map user={user} par={id}/>;
 
     case 'home':
      
