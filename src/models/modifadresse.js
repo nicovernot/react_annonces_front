@@ -12,6 +12,7 @@ const MofifAdresse = (props) => {
     const [nomville, setVille] = useState(props.adrid.ville);
     const [codepostal, setCodepostal] = useState(props.adrid.codepostal);
     const [errrempli, setErrRempli] = useState(false);
+  
     const valide = (event) =>{
      if(nomvoie && typevoie && departement && numvoie && nomville && codepostal){
        
@@ -42,8 +43,7 @@ const MofifAdresse = (props) => {
             `
         }
       }).then((result) => {
-       console.log(result.data)
-       props.action(event,result.data.data.updateAdresse.adresse)
+      props.action(event,result.data.data.updateAdresse.adresse)
        props.closemodal()
       });
       

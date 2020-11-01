@@ -14,24 +14,42 @@ import ModifAdr from './modifadresse'
 const MonComte = (props) => {
 
 const [displayConfirmation, setdisplayConfirmation] = useState(false)
+const action = props.user.modifAdresse
+const  imageBodyTemplate=(rowData)=> {
 
-  const efface = (event,id) =>{
-   
+  return <img src={`showcase/demo/images/product/${rowData.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={rowData.image} className="product-image" />;
+}
+
+const locationTemplate=(rowData)=> {
+  return (
+      <React.Fragment>
+          <Button label="Edition" icon="pi pi-plus" className="p-button-success p-mr-2" onClick={ e=> console.log(rowData.id)} />
+          <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={ e => efface(e,rowData.id,2)}  />
+      </React.Fragment>
+  )
+}
+  const efface = (event,id,tq) =>{
+     
+    const q =  `
+    mutation { ${tq === 1 ? 'deleteAdresse': 'deleteAnnonce'}(
+     input:{where:{id:"${id}"}}){
+      ${tq === 1 ? 'adresse': 'annonce'}{id}}}
+      `
       
      axios({
        url: process.env.REACT_APP_URL_HOST+`/graphql`,
        method: 'post',
        headers: {'Authorization': 'Bearer '+localStorage.getItem('token')},
        data: {
-         query: `
-         mutation {deleteAdresse(
-          input:{where:{id:"${id}"}}){
-            adresse{id}}}
-           `
+         query: q 
           },
      }).then((result) => {
-
-       props.user.effacerAdresse(event,id)
+       if(tq ===1)
+       {
+         props.user.effacerAdresse(event,id)
+       } else {
+         props.user.effacerAnnonce(event,id)
+       }      
       
      });
     }
@@ -71,13 +89,13 @@ const [displayConfirmation, setdisplayConfirmation] = useState(false)
                     {props.user.adresses.map((adr,key)=>(
                     <li key={key} className="list-group-item">
                     <Dialog header="Modification Adresse" visible={displayConfirmation===adr.id} style={{ width: '50vw' }}  onHide={() => setdisplayConfirmation("")}>
-                       <ModifAdr adrid={adr} action={props.user.modfifAdresse} closemodal={closemodal}/>
+                       <ModifAdr adrid={adr} action={action} closemodal={closemodal}/>
                    </Dialog> 
                      {adr.numvoie} {adr.typevoie} {adr.nomvoie} {adr.codepostal} {adr.ville}
                       <br/> 
                     
                     <Button label="Modifier" icon="pi pi-pencil" onClick={(e)=> modifadr(adr.id)} />
-                    <Button label="Effacer" icon="pi pi-trash" onClick={(e)=> efface(e,adr.id)} className="p-button-warning" /> 
+                    <Button label="Effacer" icon="pi pi-trash" onClick={(e)=> efface(e,adr.id,1)} className="p-button-warning" /> 
                     </li> 
                     ))}
                     </ul>
@@ -105,7 +123,9 @@ const [displayConfirmation, setdisplayConfirmation] = useState(false)
                         <Column field="titre" header="Titre"></Column>
                         <Column field="createdAt" header="Date"></Column>
                         <Column field="tarif_heure" header="Tarif"></Column>
+                        <Column field="photo" header="Photo" body={imageBodyTemplate}></Column>
                         <Column field="active" header="Actif" body={statusBodyTemplate}></Column>
+                        <Column header="Actions" body={locationTemplate}></Column>
                     </DataTable>
                 </div>
             </div>

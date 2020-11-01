@@ -56,7 +56,9 @@ class App extends Component {
           selogger: this.selogger,
           effacerAdresse:this.effacerAdresse,
           ajoutAnnonce: this.ajoutAnnonce,
-          setLocation: this.setLocation
+          modifAdresse: this.modifAdresse,
+          setLocation: this.setLocation,
+          effacerAnnonce: this.effacerAnnonce,
         },
         
      modalvisible:false,
@@ -105,11 +107,16 @@ class App extends Component {
      localStorage.setItem("adresses",JSON.stringify(this.state.user.adresses))
   }
   
+  effacerAnnonce = (event,id) => {
+    console.log("effacer annonce "+id)
+    const data = this.state.user.annonces.filter(i => i.id !== id)
+    this.setState({
+      user: { ...this.state.user, annonces: data}
+     })
+     localStorage.setItem("annonces",JSON.stringify(this.state.user.annonces))
+  }
   effacerLocation = event => {
     console.log("effacer location")
-  }
-  effacerAnnoce = event => {
-    console.log("effacer annonce")
   }
 
   modifAnnonce = event => {
@@ -123,7 +130,7 @@ class App extends Component {
   modifAdresse = (event,data) => {
     data.departement = data.departement.id
     const datafiltered = this.state.user.adresses.filter(i => i.id !== data.id)
-     console.log(data)
+     //console.log(data)
     this.setState({
       user: { ...this.state.user, adresses: [...datafiltered.concat(data) ]}
      })
@@ -191,8 +198,9 @@ class App extends Component {
       updaterole:this.updaterole,
       effacerAdresse: this.effacerAdresse,
       ajoutAnnonce: this.ajoutAnnonce,
-      modfifAdresse:this.modifAdresse,
+      modfifAdresse: this.modifAdresse,
       setLocation:this.setLocation,
+      effacerAnnonce: this.effacerAnnonce,
       logged :true }})
     this.setState({modalvisible: false})
 
@@ -246,8 +254,9 @@ class App extends Component {
               updaterole:this.updaterole, 
               effacerAdresse: this.effacerAdresse,
               ajoutAnnonce: this.ajoutAnnonce,
-              modfifAdresse:this.modifAdresse,
+              modfifAdresse: this.modifAdresse,
               setLocation:this.setLocation,
+              effacerAnnonce: this.effacerAnnonce,
               r_entreprise:"5f5c6b6b7f803318bae13a1a",
               logged :true,
               username:res.data.user.username }})

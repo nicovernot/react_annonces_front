@@ -45,12 +45,12 @@ const  onImageChange = event => {
           onChange={onImageChange}
           alt="image"
         />
-          <input type="text" name="ref" value="annonce" />
-          <input type="text" name="refId" value={props.idannonce} />
-          <input type="text" name="field" value="photos" />
-          <input type="text" name="source" value="upload" />
+          <input type="hidden" name="ref" value="annonce" />
+          <input type="hidden" name="refId" value={props.idannonce} />
+          <input type="hidden" name="field" value="photos" />
+          <input type="hidden" name="source" value="upload" />
         <br />
-        <button type="submit">Send</button>
+        <button type="submit">Upload</button>
       </form> );
 }
  
