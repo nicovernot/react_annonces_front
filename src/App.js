@@ -56,6 +56,7 @@ class App extends Component {
           selogger: this.selogger,
           effacerAdresse:this.effacerAdresse,
           ajoutAnnonce: this.ajoutAnnonce,
+          modifAnnonce: this.modifAnnonce,
           modifAdresse: this.modifAdresse,
           setLocation: this.setLocation,
           effacerAnnonce: this.effacerAnnonce,
@@ -108,7 +109,7 @@ class App extends Component {
   }
   
   effacerAnnonce = (event,id) => {
-    console.log("effacer annonce "+id)
+    
     const data = this.state.user.annonces.filter(i => i.id !== id)
     this.setState({
       user: { ...this.state.user, annonces: data}
@@ -119,10 +120,15 @@ class App extends Component {
     console.log("effacer location")
   }
 
-  modifAnnonce = event => {
-    console.log("modif adresse")
-
+  modifAnnonce = (event,data) => {
+    const datafiltered = this.state.user.annonces.filter(i => i.id !== data.id)
+     //console.log(data)
+    this.setState({
+      user: { ...this.state.user, annonces: [...datafiltered.concat(data) ]}
+     })
+     localStorage.setItem("annonces",JSON.stringify(this.state.user.annonces))
   }
+
   
   modifLocation = event => {
     console.log("modif location")
@@ -199,6 +205,7 @@ class App extends Component {
       effacerAdresse: this.effacerAdresse,
       ajoutAnnonce: this.ajoutAnnonce,
       modfifAdresse: this.modifAdresse,
+      modifAnnonce: this.modifAnnonce,
       setLocation:this.setLocation,
       effacerAnnonce: this.effacerAnnonce,
       logged :true }})
@@ -257,6 +264,7 @@ class App extends Component {
               modfifAdresse: this.modifAdresse,
               setLocation:this.setLocation,
               effacerAnnonce: this.effacerAnnonce,
+              modifAnnonce: this.modifAnnonce,
               r_entreprise:"5f5c6b6b7f803318bae13a1a",
               logged :true,
               username:res.data.user.username }})

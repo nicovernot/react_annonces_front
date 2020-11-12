@@ -10,20 +10,30 @@ import { Column } from 'primereact/column';
 import axios from 'axios';
 import { Dialog } from 'primereact/dialog';
 import ModifAdr from './modifadresse'
+import ModifAnnonce from './modifAnnonce'
 
 const MonComte = (props) => {
 
 const [displayConfirmation, setdisplayConfirmation] = useState(false)
 const action = props.user.modifAdresse
-const  imageBodyTemplate=(rowData)=> {
+const action1 = props.user.modifAnnonce
 
-  return <img src={`showcase/demo/images/product/${rowData.image}`} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={rowData.image} className="product-image" />;
+ const  imageBodyTemplate=(rowData)=> {
+  let img = ""
+  if (rowData.photos && rowData.photos.length > 0  ) {
+    img = rowData.photos[0].formats.thumbnail.url
+  }
+  
+  return <img src={img} width="60%" onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} alt={rowData.image} className="product-image" />;
 }
 
 const locationTemplate=(rowData)=> {
   return (
       <React.Fragment>
-          <Button label="Edition" icon="pi pi-plus" className="p-button-success p-mr-2" onClick={ e=> console.log(rowData.id)} />
+                  <Dialog header="Modification Annonce" visible={displayConfirmation===rowData.id} style={{ width: '50vw' }}  onHide={() => setdisplayConfirmation("")}>
+                       <ModifAnnonce annonce={rowData} action={action1} user={props.user} closemodal={closemodal}/>
+                  </Dialog> 
+          <Button label="Edition" icon="pi pi-plus" className="p-button-success p-mr-2" onClick={ e=> modifadr(rowData.id)} />
           <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={ e => efface(e,rowData.id,2)}  />
       </React.Fragment>
   )

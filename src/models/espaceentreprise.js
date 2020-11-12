@@ -4,7 +4,7 @@ import ReactMarkdown from 'react-markdown/with-html'
 import { Reveal, Tween } from 'react-gsap';
 
 const Espace_entreprise = (props) => {
-console.log(props.menu)
+
   const FadeInLeft = ({ children }) => (
     <Tween
       from={{ opacity: 0, transform: 'translate3d(+100vw, 0, 0)' }}
