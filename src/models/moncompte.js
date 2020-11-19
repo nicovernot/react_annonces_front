@@ -33,7 +33,7 @@ const locationTemplate=(rowData)=> {
                   <Dialog header="Modification Annonce" visible={displayConfirmation===rowData.id} style={{ width: '50vw' }}  onHide={() => setdisplayConfirmation("")}>
                        <ModifAnnonce annonce={rowData} action={action1} user={props.user} closemodal={closemodal}/>
                   </Dialog> 
-          <Button label="Edition" icon="pi pi-plus" className="p-button-success p-mr-2" onClick={ e=> modifadr(rowData.id)} />
+          <Button label="Edition" icon="pi pi-plus"  className="p-button-success p-mr-2" onClick={ e=> modifadr(rowData.id)} />
           <Button label="Delete" icon="pi pi-trash" className="p-button-danger" onClick={ e => efface(e,rowData.id,2)}  />
       </React.Fragment>
   )

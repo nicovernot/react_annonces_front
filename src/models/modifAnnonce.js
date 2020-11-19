@@ -8,10 +8,10 @@ import Upload from './upload'
 
 
 const ModifAnnonceForm = (props) => {
-
+ 
     const [ editorval, setEditval] = useState(props.annonce.description);
     const [titre,setTitre] = useState(props.annonce.titre)
-    const [adr,setAdr] = useState(props.annonce.adress)
+    const [adr,setAdr] = useState(props.annonce.adress.id ? props.annonce.adress.id:props.annonce.adress )
     const [prix,setPrix] = useState(props.annonce.tarif_heure)
     const [data,setData] = useState({ hits: [] })
     const [wifi, setWifi] = useState(props.annonce.equipement.wifi? props.annonce.equipement.wifi:false)
@@ -24,7 +24,7 @@ const ModifAnnonceForm = (props) => {
       month: "long",
       day: "2-digit"
     }); 
-
+   
     const valide = (event) =>{
       const tq ="updateAnnonce"
       if(titre && editorval && adr && prix ){
@@ -61,6 +61,7 @@ const ModifAnnonceForm = (props) => {
               updatedAt
               tarif_heure 
               photos { id formats }
+              adress { id }
               equipement { wifi cafetiere clim chauffage }
             }}
             }`

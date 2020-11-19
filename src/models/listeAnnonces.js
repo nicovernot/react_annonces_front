@@ -7,15 +7,16 @@ const ListeAnnonces = (props) => {
     const [displayBasic, setDisplayBasic] = useState(false)
     return ( 
         <div>
-                <div className="jumbotron jumbotron-fluid">
+              
                 <div className="container">
                     <h1>      Liste Annonces</h1>
                     <Button label="Ajout Annonce" icon="pi pi-external-link" onClick={(e) => setDisplayBasic({displayBasic:true})} />
+                    <br/>
                     <Dialog header="Creation annonce" visible={displayBasic} style={{ width: '80vw' }}  onHide={(e) => setDisplayBasic(false)}>
                         <CreaAnnonceForm visible={setDisplayBasic} user={props.user}/>
                     </Dialog>
                 </div>
-                </div>
+             
         </div>
      );
 }

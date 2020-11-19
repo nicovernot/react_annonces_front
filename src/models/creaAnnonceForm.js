@@ -53,6 +53,7 @@ const CreaAnnonceForm = (props) => {
               updatedAt
               tarif_heure 
               photos { id formats }
+              adress { id }
               equipement { wifi cafetiere clim chauffage }
             }}
             }`
